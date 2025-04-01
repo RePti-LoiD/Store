@@ -1,14 +1,18 @@
-﻿using Store.Model;
+﻿using Store.Helpers;
+using Store.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Store.ViewModel;
 
-internal class ProductViewModel : INotifyPropertyChanged
+public class ProductViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
+
+    private ImageDecoder imageDecoder = new();
 
     private Product product { get; set; } = new Product()
     {
@@ -17,8 +21,33 @@ internal class ProductViewModel : INotifyPropertyChanged
         Category = "NULL",
         Commentaries = [],
         Specs = [],
-        Tags = []
+        Tags = [],
+        Pictures = ["/Resources/chocolate_cake.jpg", "/Resources/chocolate_cake2.jpg"]
     };
+
+    private List<BitmapImage> pictures = new List<BitmapImage>();
+
+    public List<BitmapImage> Pictures
+    {
+        get => pictures;
+        set
+        {
+            pictures = value;
+
+            OnProperyChanged();
+        }
+    }
+
+    public ProductViewModel()
+    {
+        InitPictures();
+    }
+
+    private async void InitPictures()
+    {
+        foreach (var path in product.Pictures)
+            pictures.Add(await imageDecoder.DecodeImage(path));
+    }
 
     public string Name
     {
@@ -93,6 +122,9 @@ internal class ProductViewModel : INotifyPropertyChanged
 
     public List<Commentary> GetAllCommentaries() =>
         product.Commentaries;
+
+    public string[] GetTags() => 
+        product.Tags;
 
     public Dictionary<string, string> GetSpecs() => 
         product.Specs;

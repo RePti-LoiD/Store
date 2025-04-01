@@ -10,7 +10,6 @@
 
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
         <FlipView x:Name="Gallery" MaxWidth="400" Height="270"/>
-
         <muxc:PipsPager x:Name="FlipViewPipsPager"
             HorizontalAlignment="Center"
             NumberOfPages="{x:Bind Gallery.Items.Count, Mode=OneWay}"

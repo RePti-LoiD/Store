@@ -12,6 +12,7 @@ public class Product
     private List<Commentary> commentaries;
 
     private Dictionary<string, string> specs;
+    private string[] pictures;
 
     public string Name { get => name; set => name = value; }
     public string Description { get => description; set => description = value; }
@@ -19,6 +20,5 @@ public class Product
     public string[] Tags { get => tags; set => tags = value; }
     public List<Commentary> Commentaries { get => commentaries; set => commentaries = value; }
     public Dictionary<string, string> Specs { get => specs; set => specs = value; }
-
-    
+    public string[] Pictures { get => pictures; set => pictures = value; }
 }
