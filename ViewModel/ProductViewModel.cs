@@ -30,7 +30,7 @@ public class ProductViewModel : INotifyPropertyChanged
         this.product = product;
     }
 
-    public string[] Pictures
+    public List<string> Pictures
     {
         get => product.Pictures;
         set
@@ -88,7 +88,7 @@ public class ProductViewModel : INotifyPropertyChanged
         }
     }
 
-    public string[] Tags
+    public List<string> Tags
     {
         get => product.Tags;
         set

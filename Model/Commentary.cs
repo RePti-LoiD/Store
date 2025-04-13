@@ -2,11 +2,11 @@
 
 public class Commentary
 {
-    public string UserId;
-    public string UserName;
+    public string UserId { get; set; }
+    public string UserName { get; set; }
 
-    public string Content;
+    public string Content { get; set; }
     
-    public long Time;
-    public int Likes;
+    public long Time { get; set; }
+    public int Likes { get; set; }
 }

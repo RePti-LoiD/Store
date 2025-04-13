@@ -11,11 +11,11 @@ public class Product
 
     private string provider;
     
-    private string[] tags;
+    private List<string> tags;
     private List<Commentary> commentaries;
 
     private List<Spec> specs;
-    private string[] pictures;
+    private List<string> pictures;
 
     public string Name { get => name; set => name = value; }
     public string Description { get => description; set => description = value; }
@@ -24,10 +24,10 @@ public class Product
 
     public string Provider { get => provider; set => provider = value; }
 
-    public string[] Tags { get => tags; set => tags = value; }
+    public List<string> Tags { get => tags; set => tags = value; }
     public List<Commentary> Commentaries { get => commentaries; set => commentaries = value; }
     
     public List<Spec> Specs { get => specs; set => specs = value; }
-    public string[] Pictures { get => pictures; set => pictures = value; }
+    public List<string> Pictures { get => pictures; set => pictures = value; }
 }
 

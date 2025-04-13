@@ -2,6 +2,6 @@
 
 public class Spec
 {
-    public string SpecName;
-    public string SpecValue;
+    public string SpecName { get; set; }
+    public string SpecValue { get; set; }
 }

@@ -2,15 +2,22 @@
     x:Class="Store.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:Store"
+    xmlns:model="using:Store.Model"
+    xmlns:list="using:System.Collections"
+    xmlns:sys="using:System"
+    xmlns:colgen="using:System.Collections.Generic"
+    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
-
+    
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
-        <Button Click="Click">LaunchPickImagePage</Button>
+        <Button Click="Click">Cake product</Button>
+        <Button Click="Button_Click">RTX 3080</Button>
     </StackPanel>
 </Page>
