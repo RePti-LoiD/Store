@@ -1,13 +1,16 @@
-﻿using Store.View;
+﻿using Store.Model;
+using Store.View;
 using Store.ViewModel;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Store
+namespace Store;
+
+public sealed partial class MainPage : Page
 {
-    public sealed partial class MainPage : Page
-    {
-        private readonly string mdDescription = @"# Описание торта  
+    private readonly string mdDescription = @"# Описание торта  
 
 ### **Название**: Классический бисквитный торт с кремом  
 
@@ -30,67 +33,74 @@ namespace Store
 - «Медовик» с медовыми коржами и сметанным кремом.  
 - «Красный бархат» с терпковатым вкусом какао и сливочным сыром.  ";
 
-        public MainPage()
+    private ObservableCollection<ProductViewModel> products = new();
+
+    public MainPage()
+    {
+        InitializeComponent();
+
+        Loaded += OnMainPageLoaded;
+    }
+
+    private void OnMainPageLoaded(object sender, RoutedEventArgs e)
+    {
+        var cake = new Product()
         {
-            InitializeComponent();
+            Name = "Тортик",
+            Description = mdDescription,
+            Rating = 4.3f,
+            Provider = "ИП Ибрагимов",
+            Category = "Кулинария",
+            Commentaries = [],
+            Tags = [
+                "Кулинария",
+                "Торты",
+                "Бакалея"
+            ],
+            Pictures = [
+                "ms-appx:///Resources/chocolate_cake_2.jpg",
+                "ms-appx:///Resources/chocolate_cake.jpg",
+                "ms-appx:///Resources/chocolate_cake_3.jpg"
+            ],
+            Specs = [
+                new() {
+                    SpecName = "Ккал",
+                    SpecValue = "542"
+                },
+                new() {
+                    SpecName = "Белки",
+                    SpecValue = "8.5"
+                },
+                new() {
+                    SpecName = "Жиры",
+                    SpecValue = "37.7"
+                },
+                new() {
+                    SpecName = "Углеводы",
+                    SpecValue = "42.2"
+                },
+                new() {
+                    SpecName = "Вес",
+                    SpecValue = "700г"
+                }
+            ]
+        };
+        var cakeVM = new ProductViewModel(cake);
 
-            Loaded += OnMainPageLoaded;
-        }
+        products.Add(cakeVM);
+        products.Add(cakeVM);
+        products.Add(cakeVM);
 
-        private void OnMainPageLoaded(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(ProductPage), new ProductViewModel()
-            {
-                Name = "Тортик",
-                Description = mdDescription,
-                Rating = 4.3f,
-                Provider = "ИП Ибрагимов",
-                Category = "Кулинария",
-                Commentaries = [],
-                Tags = [
-                    "Кулинария", 
-                    "Торты", 
-                    "Бакалея"
-                ],
-                Pictures = [
-                    "ms-appx:///Resources/chocolate_cake.jpg", 
-                    "ms-appx:///Resources/chocolate_cake_2.jpg", 
-                    "ms-appx:///Resources/chocolate_cake_3.jpg"
-                ],
-                Specs = [
-                    new() {
-                        SpecName = "Ккал",
-                        SpecValue = "542"
-                    },
-                    new() {
-                        SpecName = "Белки",
-                        SpecValue = "8.5"
-                    },
-                    new() {
-                        SpecName = "Жиры",
-                        SpecValue = "37.7"
-                    },
-                    new() {
-                        SpecName = "Углеводы",
-                        SpecValue = "42.2"
-                    },
-                    new() {
-                        SpecName = "Вес",
-                        SpecValue = "700г"
-                    }
-                ]
-            });
+        products.Select(x => new ProductCard(x)).ToList().ForEach(Grid.Items.Add);
+    }
 
-        }
+    public void Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(ProductPage), products.First());
+    }
 
-        public void Click(object sender, RoutedEventArgs e)
-        {
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
 
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

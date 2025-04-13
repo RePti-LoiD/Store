@@ -30,6 +30,12 @@ public class ProductViewModel : INotifyPropertyChanged
         this.product = product;
     }
 
+    public Product Product
+    {
+        get => product;
+        set => product = value;
+    }
+
     public List<string> Pictures
     {
         get => product.Pictures;

@@ -6,6 +6,8 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:Store"
     xmlns:model="using:Store.Model"
+    xmlns:view="using:Store.View"
+    xmlns:viewModel="using:Store.ViewModel"
     xmlns:list="using:System.Collections"
     xmlns:sys="using:System"
     xmlns:colgen="using:System.Collections.Generic"
@@ -15,9 +17,15 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
-    
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
-        <Button Click="Click">Cake product</Button>
-        <Button Click="Button_Click">RTX 3080</Button>
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <GridView x:Name="Grid"/>
+
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+            <Button Click="Click">Cake product</Button>
+            <Button Click="Button_Click">RTX 3080</Button>
+        </StackPanel>
     </StackPanel>
 </Page>
