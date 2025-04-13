@@ -1,10 +1,8 @@
-﻿using Store.Helpers;
-using Store.Model;
+﻿using Store.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Store.ViewModel;
 
@@ -12,22 +10,28 @@ public class ProductViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private ImageDecoder imageDecoder = new();
-
     private Product product { get; set; } = new Product()
     {
         Name = "NULL",
         Description = "NULL",
         Category = "NULL",
+        Provider = "ИП Ибрагимов",
         Commentaries = [],
         Specs = [],
         Tags = [],
         Pictures = ["/Resources/chocolate_cake.jpg", "/Resources/chocolate_cake2.jpg"]
     };
 
-    private List<BitmapImage> pictures = new List<BitmapImage>();
+    public ProductViewModel() { }
 
-    public List<BitmapImage> Pictures
+    public ProductViewModel(Product product)
+    {
+        this.product = product;
+    }
+
+    private List<Picture> pictures = new List<Picture>();
+
+    public List<Picture> Pictures
     {
         get => pictures;
         set
@@ -36,17 +40,6 @@ public class ProductViewModel : INotifyPropertyChanged
 
             OnProperyChanged();
         }
-    }
-
-    public ProductViewModel()
-    {
-        InitPictures();
-    }
-
-    private async void InitPictures()
-    {
-        foreach (var path in product.Pictures)
-            pictures.Add(await imageDecoder.DecodeImage(path));
     }
 
     public string Name
@@ -66,7 +59,7 @@ public class ProductViewModel : INotifyPropertyChanged
         get => product.Description;
         set
         {
-            if (string.IsNullOrEmpty(value)) return; 
+            if (string.IsNullOrEmpty(value)) return;
             product.Description = value; 
             
             OnProperyChanged();
@@ -80,6 +73,18 @@ public class ProductViewModel : INotifyPropertyChanged
         {
             if (string.IsNullOrEmpty(value)) return;
             product.Category = value;
+
+            OnProperyChanged();
+        }
+    }
+
+    public string Provider
+    {
+        get => product.Provider;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) return;
+            product.Provider = value;
 
             OnProperyChanged();
         }
@@ -132,3 +137,5 @@ public class ProductViewModel : INotifyPropertyChanged
     private void OnProperyChanged([CallerMemberName] string property = "") => 
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 }
+
+public record Picture(string path);

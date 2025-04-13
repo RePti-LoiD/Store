@@ -16,4 +16,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\chocolate_cake.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\chocolate_cake_2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\chocolate_cake_3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

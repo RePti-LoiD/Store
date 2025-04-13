@@ -9,11 +9,18 @@ namespace Store
         public MainPage()
         {
             InitializeComponent();
+
+            Loaded += OnMainPageLoaded;
+        }
+
+        private void OnMainPageLoaded(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ProductPage));
         }
 
         public void Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ImagePickPage));
+            
         }
     }
 }
