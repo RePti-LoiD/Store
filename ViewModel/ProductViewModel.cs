@@ -16,10 +16,11 @@ public class ProductViewModel : INotifyPropertyChanged
         Description = "NULL",
         Category = "NULL",
         Provider = "ИП Ибрагимов",
+        Rating = 4.7f,
         Commentaries = [],
         Specs = [],
-        Tags = [],
-        Pictures = ["/Resources/chocolate_cake.jpg", "/Resources/chocolate_cake2.jpg"]
+        Tags = [ "Default" ],
+        Pictures = ["ms-appx:///Resources/chocolate_cake.jpg", "ms-appx:///Resources/chocolate_cake2.jpg"]
     };
 
     public ProductViewModel() { }
@@ -29,14 +30,12 @@ public class ProductViewModel : INotifyPropertyChanged
         this.product = product;
     }
 
-    private List<Picture> pictures = new List<Picture>();
-
-    public List<Picture> Pictures
+    public string[] Pictures
     {
-        get => pictures;
+        get => product.Pictures;
         set
         {
-            pictures = value;
+            product.Pictures = value;
 
             OnProperyChanged();
         }
@@ -66,6 +65,17 @@ public class ProductViewModel : INotifyPropertyChanged
         }
     }
 
+    public List<Spec> Specs
+    {
+        get => product.Specs;
+        set
+        {
+            product.Specs = value;
+
+            OnProperyChanged();
+        }
+    }
+
     public string Category
     {
         get => product.Category;
@@ -78,6 +88,17 @@ public class ProductViewModel : INotifyPropertyChanged
         }
     }
 
+    public string[] Tags
+    {
+        get => product.Tags;
+        set
+        {
+            product.Tags = value;
+
+            OnProperyChanged();
+        }
+    }
+
     public string Provider
     {
         get => product.Provider;
@@ -85,6 +106,17 @@ public class ProductViewModel : INotifyPropertyChanged
         {
             if (string.IsNullOrEmpty(value)) return;
             product.Provider = value;
+
+            OnProperyChanged();
+        }
+    }
+
+    public float Rating
+    {
+        get => product.Rating;
+        set
+        {
+            product.Rating = value;
 
             OnProperyChanged();
         }
@@ -128,14 +160,6 @@ public class ProductViewModel : INotifyPropertyChanged
     public List<Commentary> GetAllCommentaries() =>
         product.Commentaries;
 
-    public string[] GetTags() => 
-        product.Tags;
-
-    public Dictionary<string, string> GetSpecs() => 
-        product.Specs;
-
     private void OnProperyChanged([CallerMemberName] string property = "") => 
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 }
-
-public record Picture(string path);

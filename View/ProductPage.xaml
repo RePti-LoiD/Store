@@ -3,8 +3,16 @@
     xmlns:viewModelData="using:Store.ViewModel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:model="using:Store.Model"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:md="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
+
     xmlns:local="using:Store.View"
+    
+    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -15,27 +23,45 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel x:Name="ImageContainer" Padding="50, 200, 50, 200" Grid.Column="0" Spacing="8">
-            <FlipView x:Name="ImageFlipView" Height="700">
-                <Image Source="/Resources/chocolate_cake.jpg" Stretch="UniformToFill"/>
-                <Image Source="/Resources/chocolate_cake_2.jpg" Stretch="UniformToFill"/>
-                <Image Source="/Assets/StoreLogo.png" Stretch="UniformToFill"/>
-                <Image Source="/Resources/chocolate_cake_3.jpg" Stretch="UniformToFill"/>
-            </FlipView>
+        <FlipView 
+            CornerRadius="0" 
+            Grid.Column="0" 
+            x:Name="ImageFlipView" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch"
+            ItemsSource="{x:Bind productViewModel.Pictures}">
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
 
-            <muxc:PipsPager
-                HorizontalAlignment="Center"
-                NumberOfPages="{x:Bind ImageFlipView.Items.Count}"
-                SelectedPageIndex="{x:Bind ImageFlipView.SelectedIndex, Mode=OneWay}"
-                SelectedIndexChanged="PipsPager_SelectedIndexChanged"/>
-        </StackPanel>
+                    <Image Stretch="UniformToFill">
+                        <Image.Source>
+                            <BitmapImage UriSource="{x:Bind}"/>
+                        </Image.Source>
+                    </Image>
+                    
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
 
-        <RelativePanel x:Name="ProductDataContainer" Padding="50, 200, 50, 200" Grid.Column="1" Background="{StaticResource CardBackgroundFillColorDefaultBrush}">
-            
-            <StackPanel x:Name="ProductHeader">
+        <muxc:PipsPager
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            NumberOfPages="{x:Bind ImageFlipView.Items.Count}"
+            SelectedPageIndex="{x:Bind ImageFlipView.SelectedIndex, Mode=OneWay}"
+            SelectedIndexChanged="PipsPager_SelectedIndexChanged"/>
+
+        <StackPanel 
+            x:Name="ProductDataContainer" 
+            Padding="50, 200, 50, 200" 
+            Grid.Column="1" 
+            Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
+            Spacing="12">
+
+            <StackPanel x:Name="ProductHeader" Spacing="7">
                 <TextBlock Text="{x:Bind productViewModel.Name}" Style="{StaticResource DisplayTextBlockStyle}"/>
 
-                <StackPanel Orientation="Horizontal" Spacing="5">
+                <StackPanel Orientation="Horizontal" Spacing="7">
 
                     <TextBlock 
                         Text="{x:Bind productViewModel.Category}" 
@@ -54,17 +80,65 @@
                         Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
 
                 </StackPanel>
+
+                <RatingControl 
+                    x:Name="RatingViewer"
+                    Value="{x:Bind productViewModel.Rating}" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    IsReadOnly="True"
+                    Caption="{x:Bind productViewModel.Rating}"/>
+
+                <labs:TokenView 
+                    x:Name="Tags"
+                    IsWrapped="True"                              
+                    SelectionMode="None"
+                    ItemsSource="{x:Bind productViewModel.Tags}"/>
             </StackPanel>
 
-            <StackPanel
-                Margin="0 15 0 0"
-                RelativePanel.Below="ProductHeader"
-                Background="{StaticResource SmokeFillColorDefaultBrush}" 
-                Width="400"
-                Height="400"
-                CornerRadius="{StaticResource OverlayCornerRadius}">
-                
+            <StackPanel Spacing="7" Margin="0 12 0 12">
+                <md:MarkdownTextBlock x:Name="MarkdownTextBlock"
+                                Text="{x:Bind productViewModel.Description}"
+                                UseAutoLinks="True"
+                                UseEmphasisExtras="True"
+                                UseListExtras="True"
+                                UsePipeTables="True"
+                                UseTaskLists="True" />
             </StackPanel>
-        </RelativePanel>
+
+            <ListView x:Name="ProductSpecs" ItemsSource="{x:Bind productViewModel.Specs}">
+
+                <ListView.Header>
+                    <controls:DataTable Margin="12,0,0,0">
+                        <controls:DataColumn 
+                            Content="Key"
+                            DesiredWidth="80"/>
+
+                        <controls:DataColumn 
+                            Content="Value"
+                            DesiredWidth="120"/>
+
+                    </controls:DataTable>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Spec">
+                        <controls:DataRow HorizontalAlignment="Left">
+                            <TextBlock Text="{x:Bind SpecName}" Foreground="{StaticResource TextFillColorSecondaryBrush }"/>
+
+                            <TextBlock Text="{x:Bind SpecValue}" />
+                        </controls:DataRow>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+        </StackPanel>
     </Grid>
 </Page>
