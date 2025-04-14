@@ -6,6 +6,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:Store"
     xmlns:model="using:Store.Model"
+    xmlns:helpers="using:Store.Helpers"
     xmlns:view="using:Store.View"
     xmlns:viewModel="using:Store.ViewModel"
     xmlns:list="using:System.Collections"
@@ -18,11 +19,38 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
-    <muxc:NavigationView>
-        <Frame Background="{StaticResource CardBackgroundFillColorDefaultBrush}">
-        
-            <GridView x:Name="Grid" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            
-        </Frame>
-    </muxc:NavigationView>
+    <Page.Resources>
+        <helpers:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Page.Resources>
+    
+    <Grid>
+        <StackPanel Spacing="15" 
+                    Margin="50">
+
+            <AutoSuggestBox MaxWidth="400"
+                            PlaceholderText="Поиск по названию"
+                            TextChanged="AutoSuggestBox_TextChanged"
+                            QueryIcon="Find"
+                            QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                            SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
+
+            <GridView x:Name="Grid" VerticalAlignment="Top" HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <Button Click="Button_Click" Content="Add to cart"/>
+
+        <Grid Margin="12" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Button Margin="5">
+                <Grid>
+                    <FontIcon Glyph="&#xE7BF;"/>
+                </Grid>
+            </Button>
+
+            <muxc:InfoBadge 
+                Value="{x:Bind cart.Count, Mode=OneWay}"
+                Visibility="{x:Bind cart.Count, Converter={StaticResource VisibilityConverter}, Mode=OneWay}" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right"/>
+        </Grid>
+    </Grid>
 </Page>

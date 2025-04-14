@@ -1,7 +1,9 @@
 ﻿using Store.Model;
 using Store.View;
 using Store.ViewModel;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -35,12 +37,15 @@ public sealed partial class MainPage : Page
 - «Красный бархат» с терпковатым вкусом какао и сливочным сыром.  ";
 
     private ObservableCollection<ProductViewModel> products = new();
+    private CartViewModel cart;
 
     private static UIElement lastSelected;
 
     public MainPage()
     {
         InitializeComponent();
+
+        cart = CartViewModel.Init();
 
         Loaded += OnMainPageLoaded;
     }
@@ -113,11 +118,52 @@ public sealed partial class MainPage : Page
             anim.TryStart(lastSelected);
     }
 
+    private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        List<string> submittedProducts;
+
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            var userValue = sender.Text.ToLower().Replace(" ", "");
+
+            submittedProducts = products.Select(x => x.Name).Where(x => x.ToLower().Replace(" ", "").Contains(userValue)).ToList();
+        }
+        else
+        {
+            submittedProducts = new List<string>();
+        }
+
+        sender.ItemsSource = submittedProducts;
+    }
+
+    private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        if (args.SelectedItem != null)
+            sender.Text = args.SelectedItem.ToString();
+    }
+    
     public void LaunchProductPage(object sender, ProductViewModel? productViewModel)
     {
         lastSelected = (sender as UIElement)!;
 
         ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", lastSelected);
         Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
+    }
+
+    private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    {
+        if (args.QueryText != null)
+            LaunchProductPage(this, products.Where(x => x.Name.Equals(args.QueryText)).First());
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        var product = products.First().Product;
+        if (cart.Products.ContainsKey(product)) 
+            cart.IncrementProduct(product);
+        else
+            cart.AddProduct(product);
+
+        cart.OnPropertyChanged("Count");
     }
 }

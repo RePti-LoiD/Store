@@ -5,6 +5,8 @@ namespace Store.Model;
 
 public class Product : ICloneable
 {
+    private Guid id = Guid.NewGuid();
+
     private string name;
     private string description;
     private string category;
@@ -19,6 +21,7 @@ public class Product : ICloneable
     private List<Spec> specs;
     private List<string> pictures;
 
+    public Guid Id { get => id; }
     public string Name { get => name; set => name = value; }
     public string Description { get => description; set => description = value; }
     public string Category { get => category; set => category = value; }
@@ -37,5 +40,8 @@ public class Product : ICloneable
     {
         return MemberwiseClone();
     }
+
+    public override bool Equals(object? obj) =>
+        obj is Product other && other.Id.Equals(Id);
 }
 

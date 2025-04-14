@@ -6,6 +6,7 @@
     
     xmlns:local="using:Store.View"
 
+    xmlns:helpers="using:Store.Helpers"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:model="using:Store.Model"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
@@ -16,13 +17,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <helpers:CostConverter x:Key="CostConverter"/>
+    </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-        
 
         <FlipView 
             CornerRadius="0"
@@ -72,95 +75,127 @@
 
         <ScrollViewer 
             Grid.Column="1">
-            <StackPanel 
-                x:Name="ProductDataContainer" 
-                Padding="50, 200, 50, 0"
-                Grid.Column="1" 
-                Background="{StaticResource SystemControlBaseLowAcrylicWindowBrush}"
-                Spacing="12">
+            <Grid>
+                <StackPanel 
+                    x:Name="ProductDataContainer" 
+                    Padding="50, 200, 50, 150"
+                    Grid.Column="1" 
+                    Background="{StaticResource LayerFillColorDefaultBrush}"
+                    Spacing="12">
 
-                <StackPanel x:Name="ProductHeader" Spacing="7">
-                <TextBlock Text="{x:Bind productViewModel.Name}" Style="{StaticResource DisplayTextBlockStyle}"/>
+                    <StackPanel x:Name="ProductHeader" 
+                                Spacing="7">
+                        <TextBlock Text="{x:Bind productViewModel.Name}" 
+                                   Style="{StaticResource DisplayTextBlockStyle}"/>
 
-                <StackPanel Orientation="Horizontal" Spacing="7">
+                        <StackPanel Orientation="Horizontal" Spacing="7">
 
-                    <TextBlock 
-                        Text="{x:Bind productViewModel.Category}" 
-                        VerticalAlignment="Center"
-                        Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                            <TextBlock Text="{x:Bind productViewModel.Category}" 
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource BodyStrongTextBlockStyle}"/>
 
-                    <Border 
-                        Background="{StaticResource CardBackgroundFillColorSecondaryBrush}" 
-                        Width="2" 
-                        VerticalAlignment="Stretch"/>
+                            <Border Background="{StaticResource CardBackgroundFillColorSecondaryBrush}"
+                                    Width="2" 
+                                    VerticalAlignment="Stretch"/>
 
-                    <TextBlock 
-                        Text="{x:Bind productViewModel.Provider}" 
-                        VerticalAlignment="Center"
-                        Style="{StaticResource BodyStrongTextBlockStyle}"
-                        Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
+                            <TextBlock 
+                            Text="{x:Bind productViewModel.Provider}" 
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyStrongTextBlockStyle}"
+                            Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
+
+                        </StackPanel>
+
+                        <TextBlock Text="{x:Bind productViewModel.Product.Id}" 
+                                   Style="{StaticResource BodyStrongTextBlockStyle}"
+                                   Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
+                        
+                        <RatingControl 
+                        x:Name="RatingViewer"
+                        Value="{x:Bind productViewModel.Rating}" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center" 
+                        IsReadOnly="True"
+                        Caption="{x:Bind productViewModel.Rating}"/>
+
+                        <labs:TokenView 
+                        x:Name="Tags"
+                        IsWrapped="True"                              
+                        SelectionMode="None"
+                        ItemsSource="{x:Bind productViewModel.Tags}"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="7" Margin="0 12 0 12">
+                        <md:MarkdownTextBlock x:Name="MarkdownTextBlock"
+                                        Text="{x:Bind productViewModel.Description}"
+                                        UseAutoLinks="True"
+                                        UseEmphasisExtras="True"
+                                        UseListExtras="True"
+                                        UsePipeTables="True"
+                                        UseTaskLists="True" />
+                    </StackPanel>
+
+                    <ListView x:Name="ProductSpecs" ItemsSource="{x:Bind productViewModel.Specs}" Margin="0 0 0 25">
+
+                        <ListView.Header>
+                            <controls:DataTable Margin="12,0,0,0">
+                                <controls:DataColumn 
+                                    Content="Key"
+                                    DesiredWidth="80"/>
+
+                                <controls:DataColumn 
+                                    Content="Value"
+                                    DesiredWidth="120"/>
+
+                            </controls:DataTable>
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Spec">
+                                <controls:DataRow HorizontalAlignment="Left">
+                                    <TextBlock Text="{x:Bind SpecName}" Foreground="{StaticResource TextFillColorSecondaryBrush }"/>
+
+                                    <TextBlock Text="{x:Bind SpecValue}" />
+                                </controls:DataRow>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                    </ListView>
 
                 </StackPanel>
 
-                <RatingControl 
-                    x:Name="RatingViewer"
-                    Value="{x:Bind productViewModel.Rating}" 
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" 
-                    IsReadOnly="True"
-                    Caption="{x:Bind productViewModel.Rating}"/>
+                <Grid Background="{StaticResource LayerFillColorAltBrush}" 
+                      Height="120" 
+                      VerticalAlignment="Bottom">
+                    <TextBlock VerticalAlignment="Center" 
+                               Text="{x:Bind PriceText.Text}"
+                               HorizontalAlignment="Left" 
+                               Style="{StaticResource TitleLargeTextBlockStyle}" FontSize="150"
+                               Opacity="0.02"/>
+                    
+                    <Grid Padding="25">
+                        <TextBlock x:Name="PriceText" 
+                                   VerticalAlignment="Center" 
+                                   Text="{x:Bind productViewModel.Cost, Converter={StaticResource CostConverter}}" 
+                                   HorizontalAlignment="Left" 
+                                   Style="{StaticResource TitleLargeTextBlockStyle}"/>
+                        
+                        <Button HorizontalAlignment="Right" 
+                                VerticalAlignment="Center" 
+                                Style="{StaticResource AccentButtonStyle}" 
+                                Content="Add to cart"/>
+                    </Grid>
 
-                <labs:TokenView 
-                    x:Name="Tags"
-                    IsWrapped="True"                              
-                    SelectionMode="None"
-                    ItemsSource="{x:Bind productViewModel.Tags}"/>
-            </StackPanel>
+                    
 
-                <StackPanel Spacing="7" Margin="0 12 0 12">
-                    <md:MarkdownTextBlock x:Name="MarkdownTextBlock"
-                                    Text="{x:Bind productViewModel.Description}"
-                                    UseAutoLinks="True"
-                                    UseEmphasisExtras="True"
-                                    UseListExtras="True"
-                                    UsePipeTables="True"
-                                    UseTaskLists="True" />
-                </StackPanel>
-
-                <ListView x:Name="ProductSpecs" ItemsSource="{x:Bind productViewModel.Specs}" Margin="0 0 0 25">
-
-                    <ListView.Header>
-                        <controls:DataTable Margin="12,0,0,0">
-                            <controls:DataColumn 
-                                Content="Key"
-                                DesiredWidth="80"/>
-
-                            <controls:DataColumn 
-                                Content="Value"
-                                DesiredWidth="120"/>
-
-                        </controls:DataTable>
-                    </ListView.Header>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Spec">
-                            <controls:DataRow HorizontalAlignment="Left">
-                                <TextBlock Text="{x:Bind SpecName}" Foreground="{StaticResource TextFillColorSecondaryBrush }"/>
-
-                                <TextBlock Text="{x:Bind SpecValue}" />
-                            </controls:DataRow>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-
-                    <ListView.ItemContainerStyle>
-                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-
-                </ListView>
-
-            </StackPanel>
+                </Grid>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Page>
