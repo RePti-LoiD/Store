@@ -1,9 +1,7 @@
-﻿using CommunityToolkit.Labs.WinUI.MarkdownTextBlock;
-using Store.Model;
+﻿using Store.Model;
 using Store.View;
 using Store.ViewModel;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;

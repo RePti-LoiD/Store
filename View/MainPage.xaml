@@ -18,7 +18,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <GridView x:Name="Grid"/>
-    </StackPanel>
+    <muxc:NavigationView>
+        <Frame Background="{StaticResource CardBackgroundFillColorDefaultBrush}">
+        
+            <GridView x:Name="Grid" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            
+        </Frame>
+    </muxc:NavigationView>
 </Page>
