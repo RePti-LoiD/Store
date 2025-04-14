@@ -1,10 +1,13 @@
-﻿using Store.Model;
+﻿using CommunityToolkit.Labs.WinUI.MarkdownTextBlock;
+using Store.Model;
 using Store.View;
 using Store.ViewModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace Store;
 
@@ -34,6 +37,8 @@ public sealed partial class MainPage : Page
 - «Красный бархат» с терпковатым вкусом какао и сливочным сыром.  ";
 
     private ObservableCollection<ProductViewModel> products = new();
+
+    private static UIElement lastSelected;
 
     public MainPage()
     {
@@ -98,16 +103,23 @@ public sealed partial class MainPage : Page
         products.Add(cakeVM);
 
         foreach (var product in products)
-            Grid.Items.Add(new ProductCard(product, (product) => Frame.Navigate(typeof(ProductPage), product)));
+            Grid.Items.Add(new ProductCard(product, LaunchProductPage));
     }
 
-    public void Click(object sender, RoutedEventArgs e)
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        Frame.Navigate(typeof(ProductPage), products.First());
+        base.OnNavigatedTo(e);
+
+        var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("DirectConnectedAnimation");
+        if (anim != null && lastSelected != null)
+            anim.TryStart(lastSelected);
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
+    public void LaunchProductPage(object sender, ProductViewModel? productViewModel)
     {
+        lastSelected = (sender as UIElement)!;
 
+        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", lastSelected);
+        Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
     }
 }

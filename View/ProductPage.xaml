@@ -22,8 +22,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        
+
         <FlipView 
-            CornerRadius="0" 
+            CornerRadius="0"
             Grid.Column="0" 
             x:Name="ImageFlipView" 
             VerticalAlignment="Stretch" 
@@ -41,7 +43,25 @@
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
+        
+        <Button 
+            x:Name="BackButton"
+            Margin="15"
+            Grid.Column="0"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Click="BackButton_Click"
+            Background="{StaticResource SystemControlAcrylicElementBrush}"
+            IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
+            ToolTipService.ToolTip="Back">
+            
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Z" Modifiers="Control"/>
+            </Button.KeyboardAccelerators>
 
+            <FontIcon Glyph="&#xE72B;" />
+        </Button>
+        
         <muxc:PipsPager
             Grid.Column="0"
             HorizontalAlignment="Center"
@@ -50,12 +70,13 @@
             SelectedPageIndex="{x:Bind ImageFlipView.SelectedIndex, Mode=OneWay}"
             SelectedIndexChanged="PipsPager_SelectedIndexChanged"/>
 
-        <ScrollViewer Grid.Column="1">
+        <ScrollViewer 
+            Grid.Column="1">
             <StackPanel 
                 x:Name="ProductDataContainer" 
                 Padding="50, 200, 50, 0"
                 Grid.Column="1" 
-                Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
+                Background="{StaticResource SystemControlBaseLowAcrylicWindowBrush}"
                 Spacing="12">
 
                 <StackPanel x:Name="ProductHeader" Spacing="7">
@@ -106,7 +127,7 @@
                                     UseTaskLists="True" />
                 </StackPanel>
 
-                <ListView x:Name="ProductSpecs" ItemsSource="{x:Bind productViewModel.Specs}">
+                <ListView x:Name="ProductSpecs" ItemsSource="{x:Bind productViewModel.Specs}" Margin="0 0 0 25">
 
                     <ListView.Header>
                         <controls:DataTable Margin="12,0,0,0">

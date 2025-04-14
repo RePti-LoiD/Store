@@ -22,14 +22,14 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
     }
     public event PropertyChangedEventHandler? PropertyChanged;
     
-    private Action<ProductViewModel?>? onClick;
+    private Action<object, ProductViewModel?>? onClick;
 
     public ProductCard()
     {
         InitializeComponent();
     }
 
-    public ProductCard(ProductViewModel productViewModel, Action<ProductViewModel?> onClick) : this()
+    public ProductCard(ProductViewModel productViewModel, Action<object, ProductViewModel?> onClick) : this()
     {
         Product = productViewModel;
 
@@ -41,6 +41,6 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
 
     private void Grid_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
-        onClick?.Invoke(product);
+        onClick?.Invoke(this, product);
     }
 }
