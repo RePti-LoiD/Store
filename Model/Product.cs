@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Store.Model;
 
-public class Product
+public class Product : ICloneable
 {
     private string name;
     private string description;
     private string category;
+    private double cost;
     private float rating;
 
     private string provider;
@@ -20,6 +22,7 @@ public class Product
     public string Name { get => name; set => name = value; }
     public string Description { get => description; set => description = value; }
     public string Category { get => category; set => category = value; }
+    public double Cost { get => cost; set => cost = value; }
     public float Rating { get => rating; set => rating = value; }
 
     public string Provider { get => provider; set => provider = value; }
@@ -29,5 +32,10 @@ public class Product
     
     public List<Spec> Specs { get => specs; set => specs = value; }
     public List<string> Pictures { get => pictures; set => pictures = value; }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }
 

@@ -1,5 +1,6 @@
-﻿using Store.Model;
+﻿
 using Store.ViewModel;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
@@ -8,9 +9,8 @@ namespace Store.View;
 
 public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
 {
-    private ProductViewModel product;
-
-    public ProductViewModel Product 
+    private ProductViewModel? product;
+    public ProductViewModel? Product 
     { 
         get => product; 
         set
@@ -21,25 +21,26 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
         }
     }
     public event PropertyChangedEventHandler? PropertyChanged;
+    
+    private Action<ProductViewModel?>? onClick;
 
     public ProductCard()
     {
         InitializeComponent();
-
-        Loaded += ProductCard_Loaded;
     }
 
-    public ProductCard(ProductViewModel productViewModel) : this()
+    public ProductCard(ProductViewModel productViewModel, Action<ProductViewModel?> onClick) : this()
     {
         Product = productViewModel;
-    }
 
-
-    private void ProductCard_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-    {
-        
+        this.onClick = onClick;
     }
 
     private void OnPropertyChanged([CallerMemberName] string property = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+
+    private void Grid_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+    {
+        onClick?.Invoke(product);
+    }
 }

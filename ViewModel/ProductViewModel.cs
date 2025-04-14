@@ -94,6 +94,17 @@ public class ProductViewModel : INotifyPropertyChanged
         }
     }
 
+    public double Cost
+    {
+        get => product.Cost;
+        set
+        {
+            product.Cost = value;
+
+            OnProperyChanged();
+        }
+    }
+
     public List<string> Tags
     {
         get => product.Tags;

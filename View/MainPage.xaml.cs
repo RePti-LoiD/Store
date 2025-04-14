@@ -49,6 +49,7 @@ public sealed partial class MainPage : Page
             Name = "Тортик",
             Description = mdDescription,
             Rating = 4.3f,
+            Cost = 799.99d,
             Provider = "ИП Ибрагимов",
             Category = "Кулинария",
             Commentaries = [],
@@ -85,13 +86,19 @@ public sealed partial class MainPage : Page
                 }
             ]
         };
+        
         var cakeVM = new ProductViewModel(cake);
+        
+        var cakeVM2 = new ProductViewModel((cake.Clone() as Product)!);
+        cakeVM2.Pictures[0] = cakeVM2.Pictures[2];
+        cakeVM2.Name = "cakeVM2.Pictures[1]";
 
         products.Add(cakeVM);
-        products.Add(cakeVM);
+        products.Add(cakeVM2);
         products.Add(cakeVM);
 
-        products.Select(x => new ProductCard(x)).ToList().ForEach(Grid.Items.Add);
+        foreach (var product in products)
+            Grid.Items.Add(new ProductCard(product, (product) => Frame.Navigate(typeof(ProductPage), product)));
     }
 
     public void Click(object sender, RoutedEventArgs e)

@@ -11,7 +11,7 @@
     xmlns:list="using:System.Collections"
     xmlns:sys="using:System"
     xmlns:colgen="using:System.Collections.Generic"
-    
+
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -19,13 +19,6 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
         <GridView x:Name="Grid"/>
-
-
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
-            <Button Click="Click">Cake product</Button>
-            <Button Click="Button_Click">RTX 3080</Button>
-        </StackPanel>
     </StackPanel>
 </Page>
