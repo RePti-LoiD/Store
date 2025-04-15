@@ -12,6 +12,7 @@
     xmlns:list="using:System.Collections"
     xmlns:sys="using:System"
     xmlns:colgen="using:System.Collections.Generic"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -31,24 +32,54 @@
                             PlaceholderText="Поиск по названию"
                             TextChanged="AutoSuggestBox_TextChanged"
                             QueryIcon="Find"
-                            QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                            QuerySubmitted="AutoSuggestBox_QuerrySubmitted"
                             SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
 
-            <GridView x:Name="Grid" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            <!--<Grid Width="250"
+                  Height="350">
+                
+                <TextBlock Text="jahfwJ awjh fjawhf kjawhfjkahwfjhakjf hakjwfkjawhfjkahfjkhajf" 
+                           TextWrapping="Wrap"
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           Margin="25"/>
+
+                <labs:Shimmer Visibility="{x:Bind ReverseVisibility(Grid.Visibility), Mode=OneWay}" />
+            </Grid>-->
+
+            <GridView x:Name="Grid" 
+                      VerticalAlignment="Top" 
+                      HorizontalAlignment="Center" 
+                      SelectionMode="None"/>
+            
+            <GridView 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Center" 
+                SelectionMode="None"
+                Visibility="{x:Bind ReverseVisibility(IsLoad), Mode=OneWay}">
+                
+                <labs:Shimmer Width="250"
+                              Height="350"/>
+                <labs:Shimmer Width="250"
+                              Height="350"/>
+                <labs:Shimmer Width="250"
+                              Height="350"/>
+            </GridView>
         </StackPanel>
 
-        <Button Click="Button_Click" Content="Add to cart"/>
-
-        <Grid Margin="12" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Button Margin="5">
+        <Grid Margin="12" 
+              VerticalAlignment="Bottom" 
+              HorizontalAlignment="Left">
+            
+            <Button Margin="5"
+                    Click="LaunchCartPage">
                 <Grid>
                     <FontIcon Glyph="&#xE7BF;"/>
                 </Grid>
             </Button>
 
             <muxc:InfoBadge 
-                Value="{x:Bind cart.Count, Mode=OneWay}"
-                Visibility="{x:Bind cart.Count, Converter={StaticResource VisibilityConverter}, Mode=OneWay}" 
+                Value="{x:Bind cart.TotalCount, Mode=OneWay}"
+                Visibility="{x:Bind cart.TotalCount, Converter={StaticResource VisibilityConverter}, Mode=OneWay}" 
                 VerticalAlignment="Top" 
                 HorizontalAlignment="Right"/>
         </Grid>

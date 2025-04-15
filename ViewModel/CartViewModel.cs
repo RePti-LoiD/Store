@@ -1,6 +1,7 @@
 ﻿using Store.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Store.ViewModel;
@@ -21,10 +22,12 @@ public class CartViewModel : INotifyPropertyChanged
             
             OnPropertyChanged(nameof(Products));
             OnPropertyChanged(nameof(Count));
+            OnPropertyChanged(nameof(TotalCount));
         }
     }
 
     public int Count { get => products.Count; }
+    public int TotalCount { get => products.Select(x => x.Value).Sum(); }
 
     public static CartViewModel Init()
     {
@@ -39,9 +42,12 @@ public class CartViewModel : INotifyPropertyChanged
     {
         if (!Products.ContainsKey(product))
             Products[product] = 1;
+        else
+            IncrementProduct(product);
 
         OnPropertyChanged(nameof(Products));
         OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(TotalCount));
     }
 
     public void IncrementProduct(Product product)
@@ -53,6 +59,7 @@ public class CartViewModel : INotifyPropertyChanged
 
         OnPropertyChanged(nameof(Products));
         OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(TotalCount));
     }
 
     public void RemoveProduct(Product product)
@@ -63,6 +70,7 @@ public class CartViewModel : INotifyPropertyChanged
 
         OnPropertyChanged(nameof(Products));
         OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(TotalCount));
     }
 
     public void DecrementProduct(Product product)
@@ -76,6 +84,7 @@ public class CartViewModel : INotifyPropertyChanged
 
         OnPropertyChanged(nameof(Products));
         OnPropertyChanged(nameof(Count));
+        OnPropertyChanged(nameof(TotalCount));
     }
 
     public Dictionary<Product, int> GetProductsInCart() => products;

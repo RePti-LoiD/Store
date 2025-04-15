@@ -12,20 +12,22 @@
 
     <UserControl.Resources>
         <helpers:CostConverter x:Key="CostConverter"/>
+        <helpers:ObjectToStringConverter x:Key="ToString"/>
     </UserControl.Resources>
     
-    <Grid
-        PointerReleased="Grid_PointerReleased"
-        CornerRadius="{StaticResource OverlayCornerRadius}"
-        Width="250" 
-        Height="350">
+    <Grid PointerReleased="Grid_PointerReleased" 
+          CornerRadius="{StaticResource OverlayCornerRadius}"
+          Width="250" 
+          Height="350">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Image x:Name="Backdrop" Grid.Row="0" Stretch="UniformToFill">
+        <Image x:Name="Backdrop" 
+               Grid.Row="0" 
+               Stretch="UniformToFill">
             <Image.Source>
                 <BitmapImage UriSource="{x:Bind Product.Pictures[0]}"/>
             </Image.Source>
@@ -33,37 +35,64 @@
 
         <Border Background="{StaticResource SystemControlAcrylicElementBrush}"/>
 
-        <Border 
-            Grid.Row="0"
-            Margin="45"
-            CornerRadius="8">
-            <Image Stretch="UniformToFill">
+        <Border Grid.Row="0" 
+                Margin="45"
+                CornerRadius="8">
+            
+            <Image x:Name="ProductCardImage" Stretch="UniformToFill">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind Product.Pictures[0]}"/>
                 </Image.Source>
             </Image>
         </Border>
+        
+        <Grid Grid.Row="1" 
+              HorizontalAlignment="Stretch"
+              Background="{StaticResource CardBackgroundFillColorDefaultBrush}">
 
-        <Grid 
-            Grid.Row="1"
-            HorizontalAlignment="Stretch"
-            Background="{StaticResource CardBackgroundFillColorDefaultBrush}">
+            <TextBlock Margin="10" 
+                       Text="{x:Bind Product.Name, Mode=OneWay}" 
+                       Style="{StaticResource SubtitleTextBlockStyle}"/>
 
-            <TextBlock Margin="10" Text="{x:Bind Product.Name, Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <Button Style="{StaticResource AccentButtonStyle}"
+                    Margin="16"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Click="AddButtonClick"
+                    Visibility="{x:Bind ButtonVisibility, Mode=OneWay}">
 
-            <Border
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                CornerRadius="{StaticResource ControlCornerRadius}"
-                Margin="16"
-                Padding="7"
-                Background="{StaticResource SystemAccentColor}">
+                <StackPanel Orientation="Horizontal" 
+                            Spacing="4">
+                    
+                    <FontIcon Glyph="&#xE7BF;"/>
+                    <TextBlock Text="{x:Bind Product.Cost, Converter={StaticResource CostConverter}}" 
+                               Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                </StackPanel>
+                
+            </Button>
 
-                <TextBlock 
-                    Text="{x:Bind Product.Cost, Converter={StaticResource CostConverter}}" 
-                    Style="{StaticResource BodyStrongTextBlockStyle}"
-                    Foreground="{StaticResource TextOnAccentFillColorPrimaryBrush}"/>
-            </Border>
+            <StackPanel Spacing="10"
+                        Margin="16"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Visibility="{x:Bind AppenderVisibility, Mode=OneWay}">
+                <Button Style="{StaticResource AccentButtonStyle}"
+                        Click="DecrementButtonClick">
+                    <FontIcon Glyph="&#xE738;" 
+                              FontSize="12"/>
+                </Button>
+
+                <TextBlock VerticalAlignment="Center" 
+                           Text="{x:Bind ProductInCartCount, Mode=OneWay}"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"/>
+
+                <Button Style="{StaticResource AccentButtonStyle}"
+                        Click="IncrementButtonClick">
+                    <FontIcon Glyph="&#xE710;" 
+                              FontSize="12"/>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

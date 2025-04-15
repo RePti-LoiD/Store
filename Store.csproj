@@ -28,8 +28,10 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.DataTable" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.250319-build.2093" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.Shimmer" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250319-build.2093" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Resources\chocolate_cake.jpg">
@@ -39,6 +41,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\chocolate_cake_3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\products.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

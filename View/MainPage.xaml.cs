@@ -1,9 +1,14 @@
-﻿using Store.Model;
+﻿using Store.Helpers.DataProviders;
 using Store.View;
 using Store.ViewModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -11,102 +16,50 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Store;
 
-public sealed partial class MainPage : Page
+public sealed partial class MainPage : Page, INotifyPropertyChanged
 {
-    private readonly string mdDescription = @"# Описание торта  
-
-### **Название**: Классический бисквитный торт с кремом  
-
-### **Внешний вид**:  
-Круглый торт диаметром ~20 см, высотой ~8 см. Состоит из 3–4 бисквитных слоёв, пропитанных сиропом, прослоенных нежным масляным или заварным кремом. Поверхность покрыта гладкой кремовой глазурью, украшена ягодами (клубника, малина), шоколадной стружкой или декором из мастики.  
-
-### **Вкус и текстура**:  
-- **Бисквит**: воздушный, слегка влажный, с ванильным или шоколадным вкусом.  
-- **Крем**: сливочный, не приторный, с балансом сладости и легкой кислинки (если добавлены ягоды).  
-- **Дополнительно**: возможны прослойки из фруктового джема или карамели.  
-
-### **Вес/Размер**:  
-- Стандартный: 1–1.5 кг (рассчитан на 6–8 персон).  
-- Мини-версия: ~500 г (на 2–3 человек).  
-
-### **Оформление**:  
-Элегантный, но не перегруженный декор. Подходит для праздников (дни рождения, свадьбы) или семейного чаепития.  
-
-**Примеры вариаций**:  
-- «Медовик» с медовыми коржами и сметанным кремом.  
-- «Красный бархат» с терпковатым вкусом какао и сливочным сыром.  ";
-
     private ObservableCollection<ProductViewModel> products = new();
     private CartViewModel cart;
+    private ProductDataProvider productDataProvider;
 
-    private static UIElement lastSelected;
+    private bool isLoad;
+    public bool IsLoad
+    {
+        get => isLoad;
+        set
+        {
+            isLoad = value;
+
+            OnPropertyChanged();
+        }
+    }
+
+    private static UIElement? lastSelected;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public MainPage()
     {
         InitializeComponent();
 
         cart = CartViewModel.Init();
+        
+        productDataProvider = ProductDataProvider.Init();
 
-        Loaded += OnMainPageLoaded;
-    }
-
-    private void OnMainPageLoaded(object sender, RoutedEventArgs e)
-    {
-        var cake = new Product()
+        _ = DispatcherQueue.GetForCurrentThread().TryEnqueue(DispatcherQueuePriority.Low, async () =>
         {
-            Name = "Тортик",
-            Description = mdDescription,
-            Rating = 4.3f,
-            Cost = 799.99d,
-            Provider = "ИП Ибрагимов",
-            Category = "Кулинария",
-            Commentaries = [],
-            Tags = [
-                "Кулинария",
-                "Торты",
-                "Бакалея"
-            ],
-            Pictures = [
-                "ms-appx:///Resources/chocolate_cake_2.jpg",
-                "ms-appx:///Resources/chocolate_cake.jpg",
-                "ms-appx:///Resources/chocolate_cake_3.jpg"
-            ],
-            Specs = [
-                new() {
-                    SpecName = "Ккал",
-                    SpecValue = "542"
-                },
-                new() {
-                    SpecName = "Белки",
-                    SpecValue = "8.5"
-                },
-                new() {
-                    SpecName = "Жиры",
-                    SpecValue = "37.7"
-                },
-                new() {
-                    SpecName = "Углеводы",
-                    SpecValue = "42.2"
-                },
-                new() {
-                    SpecName = "Вес",
-                    SpecValue = "700г"
-                }
-            ]
-        };
-        
-        var cakeVM = new ProductViewModel(cake);
-        
-        var cakeVM2 = new ProductViewModel((cake.Clone() as Product)!);
-        cakeVM2.Pictures[0] = cakeVM2.Pictures[2];
-        cakeVM2.Name = "cakeVM2.Pictures[1]";
+            await productDataProvider!.LoadDataAsync();
 
-        products.Add(cakeVM);
-        products.Add(cakeVM2);
-        products.Add(cakeVM);
+            Debug.WriteLine(ProductDataProvider.Data);
+            Debug.WriteLine(ProductDataProvider.Data.Count);
 
-        foreach (var product in products)
-            Grid.Items.Add(new ProductCard(product, LaunchProductPage));
+            products = new(ProductDataProvider.Data.Select(x => new ProductViewModel(x)));
+
+            foreach (var product in products)
+                Grid.Items.Add(new ProductCard(product, cart, LaunchProductPage));
+
+            IsLoad = true;
+        });
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -116,6 +69,19 @@ public sealed partial class MainPage : Page
         var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("DirectConnectedAnimation");
         if (anim != null && lastSelected != null)
             anim.TryStart(lastSelected);
+    }
+
+    private void LaunchCartPage(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(TestShimmerPage));
+    }
+
+    public void LaunchProductPage(object sender, ProductViewModel? productViewModel, UIElement uIElement)
+    {
+        lastSelected = uIElement;
+
+        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", lastSelected);
+        Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
     }
 
     private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -141,29 +107,19 @@ public sealed partial class MainPage : Page
         if (args.SelectedItem != null)
             sender.Text = args.SelectedItem.ToString();
     }
-    
-    public void LaunchProductPage(object sender, ProductViewModel? productViewModel)
-    {
-        lastSelected = (sender as UIElement)!;
 
-        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", lastSelected);
-        Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
-    }
-
-    private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    private void AutoSuggestBox_QuerrySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
     {
         if (args.QueryText != null)
-            LaunchProductPage(this, products.Where(x => x.Name.Equals(args.QueryText)).First());
+            LaunchProductPage(this, products.Where(x => x.Name.Equals(args.QueryText)).First(), lastSelected);
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        var product = products.First().Product;
-        if (cart.Products.ContainsKey(product)) 
-            cart.IncrementProduct(product);
-        else
-            cart.AddProduct(product);
+    private void OnPropertyChanged([CallerMemberName] string property = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
-        cart.OnPropertyChanged("Count");
-    }
+    private Visibility BoolToVisibility(bool value) => 
+        value ? Visibility.Visible : Visibility.Collapsed;
+    private Visibility ReverseVisibility(Visibility visibility) => 
+        visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+    private Visibility ReverseVisibility(bool value) => BoolToVisibility(!value);
 }
