@@ -40,7 +40,8 @@
                 Margin="45"
                 CornerRadius="8">
             
-            <Image x:Name="ProductCardImage" Stretch="UniformToFill">
+            <Image x:Name="ProductCardImage" 
+                   Stretch="UniformToFill">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind Product.Pictures[0]}"/>
                 </Image.Source>

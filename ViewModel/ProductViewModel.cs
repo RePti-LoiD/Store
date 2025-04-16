@@ -30,6 +30,17 @@ public class ProductViewModel : INotifyPropertyChanged
         this.product = product;
     }
 
+    public int Id 
+    { 
+        get => product.Id;
+        set
+        {
+            product.Id = value;
+
+            OnProperyChanged();
+        }
+    }
+
     public Product Product
     {
         get => product;

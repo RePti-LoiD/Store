@@ -5,6 +5,7 @@
 
     xmlns:local="using:Store.View.Controls"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
+    xmlns:controls="using:Store.View.Controls"
     xmlns:helpers="using:Store.Helpers"
     
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -48,10 +49,20 @@
                        Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
             </StackPanel>
 
+            <controls:AddToCartButton x:Name="AddToCartButton"
+                                      ButtonClicked="AddToCartButton_ButtonClicked"
+                                      VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Right"
+                                      Margin="15"
+                                      Grid.Column="1" 
+                                      Cart="{x:Bind cart}" 
+                                      Product="{x:Bind product}"/>
+
             <Grid VerticalAlignment="Bottom"
                   HorizontalAlignment="Right"
                   Margin="15"
-                  Grid.Column="1">
+                  Grid.Column="1"
+                  Visibility="Collapsed">
                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">
                     <Run Text="{x:Bind product.Cost, Converter={StaticResource CostConverter}}"/>
                     x

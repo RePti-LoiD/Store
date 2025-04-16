@@ -33,8 +33,6 @@ public class ProductDataProvider : INotifyPropertyChanged
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(GlobalConst.DEFAULT_PRODUCT_JSON_PATH);
             string json = await FileIO.ReadTextAsync(file);
 
-            Debug.WriteLine(file.Path);
-
             Data = [.. JsonConvert.DeserializeObject<Product[]>(json)!];
 
             Thread.Sleep(1000);
@@ -44,11 +42,6 @@ public class ProductDataProvider : INotifyPropertyChanged
             Debug.WriteLine(ex);
             Debug.WriteLine(ex.Message);
             Debug.WriteLine(ex.StackTrace);
-
-            var package = new DataPackage();
-            package.SetText(ex.Message);
-            package.SetText(ex.StackTrace);
-            Clipboard.SetContent(package);
         }
     }
 }

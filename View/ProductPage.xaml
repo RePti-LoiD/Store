@@ -155,6 +155,7 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="model:Spec">
+                                
                                 <controls:DataRow HorizontalAlignment="Left">
                                     <TextBlock Text="{x:Bind SpecName}" Foreground="{StaticResource TextFillColorSecondaryBrush }"/>
 
@@ -164,8 +165,10 @@
                         </ListView.ItemTemplate>
 
                         <ListView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" 
+                                   TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" 
+                                        Value="Stretch" />
                             </Style>
                         </ListView.ItemContainerStyle>
 
@@ -190,7 +193,9 @@
                                    Style="{StaticResource TitleLargeTextBlockStyle}"/>
 
                         <localControls:AddToCartButton Cart="{x:Bind Cart}"
-                                                       Product="{x:Bind Product}"/>
+                                                       Product="{x:Bind Product}"
+                                                       VerticalAlignment="Bottom"
+                                                       HorizontalAlignment="Right"/>
                     </Grid>
 
                     

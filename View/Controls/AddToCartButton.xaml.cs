@@ -1,5 +1,6 @@
 ﻿using Store.Model;
 using Store.ViewModel;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
@@ -14,6 +15,7 @@ public sealed partial class AddToCartButton : UserControl, INotifyPropertyChange
     private CartViewModel? cart;
 
     public event PropertyChangedEventHandler? PropertyChanged;
+    public event EventHandler? ButtonClicked;
 
     private Visibility ButtonVisibility
     {
@@ -82,6 +84,7 @@ public sealed partial class AddToCartButton : UserControl, INotifyPropertyChange
     {
         Cart!.AddProduct(Product!.Product);
 
+        ButtonClicked?.Invoke(this, new EventArgs());
         UpdateBinds();
     }
 
@@ -89,12 +92,15 @@ public sealed partial class AddToCartButton : UserControl, INotifyPropertyChange
     {
         Cart!.IncrementProduct(Product!.Product);
 
+        ButtonClicked?.Invoke(this, new EventArgs());
         UpdateBinds();
     }
 
     private void DecrementButtonClick(object sender, RoutedEventArgs e)
     {
         Cart!.DecrementProduct(Product!.Product);
+
+        ButtonClicked?.Invoke(this, new EventArgs());
         UpdateBinds();
     }
 

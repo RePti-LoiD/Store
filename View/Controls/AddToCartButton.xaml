@@ -34,27 +34,31 @@
 
         </Button>
 
-        <StackPanel Spacing="10"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal"
-                    Visibility="{x:Bind AppenderVisibility, Mode=OneWay}">  
-            
-            <Button Style="{StaticResource AccentButtonStyle}"
-                    Click="DecrementButtonClick">
-                <FontIcon Glyph="&#xE738;" 
-                          FontSize="12"/>
-            </Button>
+        <Border Background="{StaticResource ControlStrokeColorDefaultBrush}"
+                CornerRadius="10"
+                Padding="5"
+                Visibility="{x:Bind AppenderVisibility, Mode=OneWay}">
+            <StackPanel Spacing="10"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal" >
 
-            <TextBlock VerticalAlignment="Center" 
-                       Text="{x:Bind ProductInCartCount, Mode=OneWay}"
-                       Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                <Button Style="{StaticResource AccentButtonStyle}"
+                        Click="DecrementButtonClick">
+                    <FontIcon Glyph="&#xE738;" 
+                  FontSize="12"/>
+                </Button>
 
-            <Button Style="{StaticResource AccentButtonStyle}"
-                    Click="IncrementButtonClick">
-                <FontIcon Glyph="&#xE710;" 
-                          FontSize="12"/>
-            </Button>
-        </StackPanel>
+                <TextBlock VerticalAlignment="Center" 
+                           Text="{x:Bind ProductInCartCount, Mode=OneWay}"
+                           Style="{StaticResource BodyStrongTextBlockStyle}"/>
+
+                <Button Style="{StaticResource AccentButtonStyle}"
+                        Click="IncrementButtonClick">
+                    <FontIcon Glyph="&#xE710;" 
+                  FontSize="12"/>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

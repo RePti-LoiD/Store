@@ -5,12 +5,19 @@
     
     xmlns:local="using:Store.View"
     xmlns:model="using:Store.Model"    
+    xmlns:helpers="using:Store.Helpers"    
+    xmlns:viewModel="using:Store.ViewModel"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <helpers:CostConverter x:Key="CostConverter"/>
+    </Page.Resources>
+    
     <Grid x:Name="MainGrid">
         
         <Button x:Name="BackButton"
@@ -47,30 +54,88 @@
                 <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Added to cart"
+            <TextBlock Text="Корзина"
                        Style="{StaticResource TitleLargeTextBlockStyle}"
                        Margin="24"/>
 
             <ListView x:Name="ProductList" 
                       Grid.Row="1"
-                      SelectionMode="None"/>
+                      SelectionMode="None"
+                      ItemsSource="{x:Bind products, Mode=OneWay}"/>
 
-            <ListView x:Name="CheckListView"
-                      Grid.Column="1"
-                      Grid.Row="1">
+            <StackPanel Spacing="10"
+                        Grid.Row="1"
+                        Grid.Column="1">
                 
-                <ListView.Header>
-                    <controls:DataTable>
-                        <controls:DataColumn/>
+                <ListView x:Name="CheckListView"
+                          Grid.Column="1"
+                          Grid.Row="1"
+                          ItemsSource="{x:Bind productDatas, Mode=OneWay}">
 
-                        <controls:DataColumn/>
-                        
-                        <controls:DataColumn/>
-                    </controls:DataTable>
-                </ListView.Header>
-            </ListView>
+                    <ListView.Header>
+                        <controls:DataTable Margin="12 0 0 0">
+                            <controls:DataColumn Content="Наименование"
+                                                 DesiredWidth="150"/>
+                            
+                            <controls:DataColumn Content="Цена"
+                                                 DesiredWidth="70"/>
 
+                            <controls:DataColumn Content="Кол-во"
+                                                 DesiredWidth="70"/>
 
+                            <controls:DataColumn Content="Итог"
+                                                 DesiredWidth="100"/>
+                        </controls:DataTable>
+                    </ListView.Header>
+                    
+                    <ListView.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" 
+                               TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" 
+                                    Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:CartProductData">
+                            <controls:DataRow HorizontalAlignment="Left">
+
+                                <labs:MarqueeText Text="{x:Bind ProductName}"
+                                                  Direction="Left"
+                                                  Behavior="Looping"/>
+
+                                <TextBlock Text="{x:Bind Cost, Converter={StaticResource CostConverter}}" />
+                                
+                                <TextBlock Text="{x:Bind CountInCart}" />
+
+                                <TextBlock Text="{x:Bind TotalCost, Converter={StaticResource CostConverter}}" />
+                            </controls:DataRow>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Border HorizontalAlignment="Stretch" 
+                        Height="1" 
+                        Background="{StaticResource ControlStrokeColorOnAccentTertiaryBrush}"/>
+
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10"
+                            HorizontalAlignment="Right"
+                            Margin="0 0 100 0">
+                    <TextBlock Text="Общая сумма"
+                               Style="{StaticResource BodyStrongTextBlockStyle}"
+                               Margin="0 10 0 0"/>
+
+                    <TextBlock Text="{x:Bind TotalSum, Converter={StaticResource CostConverter}, Mode=OneWay}"
+                               Style="{StaticResource TitleLargeTextBlockStyle}"/>
+                </StackPanel>
+
+                <Button Content="Оформить заказ"
+                        Click="CreateOrder"
+                        Style="{StaticResource AccentButtonStyle}"
+                        HorizontalAlignment="Stretch"
+                        Margin="20 0 20 0"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>
