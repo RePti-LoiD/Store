@@ -9,6 +9,7 @@
     xmlns:helpers="using:Store.Helpers"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:model="using:Store.Model"
+    xmlns:localControls="using:Store.View.Controls"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:md="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
@@ -33,7 +34,7 @@
             x:Name="ImageFlipView" 
             VerticalAlignment="Stretch" 
             HorizontalAlignment="Stretch"
-            ItemsSource="{x:Bind productViewModel.Pictures}">
+            ItemsSource="{x:Bind Product.Pictures}">
             <FlipView.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
 
@@ -85,12 +86,12 @@
 
                     <StackPanel x:Name="ProductHeader" 
                                 Spacing="7">
-                        <TextBlock Text="{x:Bind productViewModel.Name}" 
+                        <TextBlock Text="{x:Bind Product.Name}" 
                                    Style="{StaticResource DisplayTextBlockStyle}"/>
 
                         <StackPanel Orientation="Horizontal" Spacing="7">
 
-                            <TextBlock Text="{x:Bind productViewModel.Category}" 
+                            <TextBlock Text="{x:Bind Product.Category}" 
                                        VerticalAlignment="Center"
                                        Style="{StaticResource BodyStrongTextBlockStyle}"/>
 
@@ -99,35 +100,35 @@
                                     VerticalAlignment="Stretch"/>
 
                             <TextBlock 
-                            Text="{x:Bind productViewModel.Provider}" 
+                            Text="{x:Bind Product.Provider}" 
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyStrongTextBlockStyle}"
                             Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
 
                         </StackPanel>
 
-                        <TextBlock Text="{x:Bind productViewModel.Product.Id}" 
+                        <TextBlock Text="{x:Bind Product.Product.Id}" 
                                    Style="{StaticResource BodyStrongTextBlockStyle}"
                                    Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
                         
                         <RatingControl 
                         x:Name="RatingViewer"
-                        Value="{x:Bind productViewModel.Rating}" 
+                        Value="{x:Bind Product.Rating}" 
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Center" 
                         IsReadOnly="True"
-                        Caption="{x:Bind productViewModel.Rating}"/>
+                        Caption="{x:Bind Product.Rating}"/>
 
                         <labs:TokenView 
                         x:Name="Tags"
                         IsWrapped="True"                              
                         SelectionMode="None"
-                        ItemsSource="{x:Bind productViewModel.Tags}"/>
+                        ItemsSource="{x:Bind Product.Tags}"/>
                     </StackPanel>
 
                     <StackPanel Spacing="7" Margin="0 12 0 12">
                         <md:MarkdownTextBlock x:Name="MarkdownTextBlock"
-                                        Text="{x:Bind productViewModel.Description}"
+                                        Text="{x:Bind Product.Description}"
                                         UseAutoLinks="True"
                                         UseEmphasisExtras="True"
                                         UseListExtras="True"
@@ -135,7 +136,9 @@
                                         UseTaskLists="True" />
                     </StackPanel>
 
-                    <ListView x:Name="ProductSpecs" ItemsSource="{x:Bind productViewModel.Specs}" Margin="0 0 0 25">
+                    <ListView x:Name="ProductSpecs" 
+                              ItemsSource="{x:Bind Product.Specs}" 
+                              Margin="0 0 0 25">
 
                         <ListView.Header>
                             <controls:DataTable Margin="12,0,0,0">
@@ -182,14 +185,12 @@
                     <Grid Padding="25">
                         <TextBlock x:Name="PriceText" 
                                    VerticalAlignment="Center" 
-                                   Text="{x:Bind productViewModel.Cost, Converter={StaticResource CostConverter}}" 
+                                   Text="{x:Bind Product.Cost, Converter={StaticResource CostConverter}}" 
                                    HorizontalAlignment="Left" 
                                    Style="{StaticResource TitleLargeTextBlockStyle}"/>
-                        
-                        <Button HorizontalAlignment="Right" 
-                                VerticalAlignment="Center" 
-                                Style="{StaticResource AccentButtonStyle}" 
-                                Content="Add to cart"/>
+
+                        <localControls:AddToCartButton Cart="{x:Bind Cart}"
+                                                       Product="{x:Bind Product}"/>
                     </Grid>
 
                     

@@ -1,12 +1,16 @@
 ﻿using Store.Helpers.DataProviders;
 using Store.View;
 using Store.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -37,28 +41,34 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
     private static UIElement? lastSelected;
 
     public event PropertyChangedEventHandler? PropertyChanged;
+    private CancellationToken productLoadCancelationToken;
 
     public MainPage()
     {
         InitializeComponent();
-
-        cart = CartViewModel.Init();
         
+        InitMainPage();
+    }
+
+    private void InitMainPage()
+    {
+        cart = CartViewModel.Init();
+
         productDataProvider = ProductDataProvider.Init();
 
-        _ = DispatcherQueue.GetForCurrentThread().TryEnqueue(DispatcherQueuePriority.Low, async () =>
+        _ = Task.Run(async () =>
         {
             await productDataProvider!.LoadDataAsync();
 
-            Debug.WriteLine(ProductDataProvider.Data);
-            Debug.WriteLine(ProductDataProvider.Data.Count);
+            products = [.. ProductDataProvider.Data.Select(x => new ProductViewModel(x))];
 
-            products = new(ProductDataProvider.Data.Select(x => new ProductViewModel(x)));
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
+            {
+                foreach (var product in products)
+                    Grid.Items.Add(new ProductCard(product, cart, LaunchProductPage));
 
-            foreach (var product in products)
-                Grid.Items.Add(new ProductCard(product, cart, LaunchProductPage));
-
-            IsLoad = true;
+                IsLoad = true;
+            });
         });
     }
 
@@ -73,14 +83,14 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
 
     private void LaunchCartPage(object sender, RoutedEventArgs e)
     {
-        Frame.Navigate(typeof(TestShimmerPage));
+        Frame.Navigate(typeof(CartPage));
     }
 
     public void LaunchProductPage(object sender, ProductViewModel? productViewModel, UIElement uIElement)
     {
         lastSelected = uIElement;
 
-        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", lastSelected);
+        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", lastSelected ?? Grid);
         Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
     }
 
@@ -119,7 +129,5 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
 
     private Visibility BoolToVisibility(bool value) => 
         value ? Visibility.Visible : Visibility.Collapsed;
-    private Visibility ReverseVisibility(Visibility visibility) => 
-        visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
     private Visibility ReverseVisibility(bool value) => BoolToVisibility(!value);
 }

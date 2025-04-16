@@ -1,4 +1,5 @@
-﻿using Store.ViewModel;
+﻿using Store.View.Controls;
+using Store.ViewModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
@@ -7,7 +8,7 @@ namespace Store.View;
 
 public sealed partial class CartPage : Page
 {
-    private CartViewModel cart;
+    private CartViewModel Cart;
 
     public CartPage()
     {
@@ -18,11 +19,18 @@ public sealed partial class CartPage : Page
     {
         base.OnNavigatedTo(e);
 
+        Cart = CartViewModel.Init();
+
         var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("DirectConnectedAnimation");
         if (anim != null)
             anim.TryStart(MainGrid);
 
-        if (e.Parameter is CartViewModel cartViewModel)
-            cart = cartViewModel;
+        foreach (var product in Cart.Products)
+            ProductList.Items.Add(new ProductItemCart(Cart, product.Key, (_, product) => Frame.Navigate(typeof(ProductPage), new ProductViewModel(product))));
+    }
+
+    private void BackButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    {
+        Frame.GoBack();
     }
 }

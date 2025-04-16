@@ -23,11 +23,20 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>C:\Users\delhi\source\repos\Store\bin\Debug\net9.0-windows10.0.26100.0\win-x64\publish\</AppxPackageDir>
     <PackageCertificatePassword>135790864</PackageCertificatePassword>
-    <PackageCertificateThumbprint>1B217F6C734C088D37890CD948C7804F4C769E5F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>4A8DFE6E92C53A948B22B53D8912CB0B76A4459C</PackageCertificateThumbprint>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\products.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\products.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.DataTable" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Controls.MarkdownTextBlock" Version="0.1.250319-build.2093" />
+    <PackageReference Include="CommunityToolkit.Labs.Uwp.MarqueeText" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Shimmer" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250319-build.2093" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
@@ -43,11 +52,5 @@
     <None Update="Resources\chocolate_cake_3.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\products.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\Controls\" />
   </ItemGroup>
 </Project>

@@ -35,35 +35,40 @@
                             QuerySubmitted="AutoSuggestBox_QuerrySubmitted"
                             SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
 
-            <!--<Grid Width="250"
-                  Height="350">
-                
-                <TextBlock Text="jahfwJ awjh fjawhf kjawhfjkahwfjhakjf hakjwfkjawhfjkahfjkhajf" 
-                           TextWrapping="Wrap"
-                           Style="{StaticResource TitleTextBlockStyle}"
-                           Margin="25"/>
+            <ScrollViewer>
+                <Grid>
+                    <GridView x:Name="Grid" 
+                              VerticalAlignment="Top" 
+                              HorizontalAlignment="Center" 
+                              SelectionMode="None"/>
 
-                <labs:Shimmer Visibility="{x:Bind ReverseVisibility(Grid.Visibility), Mode=OneWay}" />
-            </Grid>-->
+                    <GridView VerticalAlignment="Top"
+                              HorizontalAlignment="Center" 
+                              SelectionMode="None"
+                              Visibility="{x:Bind ReverseVisibility(IsLoad), Mode=OneWay}">
 
-            <GridView x:Name="Grid" 
-                      VerticalAlignment="Top" 
-                      HorizontalAlignment="Center" 
-                      SelectionMode="None"/>
-            
-            <GridView 
-                VerticalAlignment="Top" 
-                HorizontalAlignment="Center" 
-                SelectionMode="None"
-                Visibility="{x:Bind ReverseVisibility(IsLoad), Mode=OneWay}">
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250"
+                                      Height="350"/>
+                        <labs:Shimmer Width="250" 
+                                      Height="350"/>
+                    </GridView>
+                </Grid>
                 
-                <labs:Shimmer Width="250"
-                              Height="350"/>
-                <labs:Shimmer Width="250"
-                              Height="350"/>
-                <labs:Shimmer Width="250"
-                              Height="350"/>
-            </GridView>
+            </ScrollViewer>
         </StackPanel>
 
         <Grid Margin="12" 

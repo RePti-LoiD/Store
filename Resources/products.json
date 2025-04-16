@@ -1,6 +1,6 @@
 ﻿[
   {
-    "Id": "a1b2c3d4-1234-5678-9101-112131415161",
+    "Id": 258692924,
     "Name": "NVIDIA GeForce RTX 3080",
     "Description": "# NVIDIA GeForce RTX 3080\n\n![RTX 3080](https://example.com/images/rtx3080.jpg)\n\n**Категория**: Видеокарты | **Производитель**: NVIDIA | **Цена**: $699\n\n**Описание**: Флагманская видеокарта на архитектуре Ampere с 10 ГБ GDDR6X, поддержкой Ray Tracing и DLSS 2.0.\n\n**Характеристики**:\n- GPU: NVIDIA GA102\n- Память: 10 ГБ GDDR6X\n- Тактовая частота: 1440–1710 МГц\n- TDP: 320 Вт\n\n**Теги**: `Игры` `4K` `Ray Tracing` `VR` `Дизайн`\n\n**Комментарии**:\n1. GamerPro: \"Cyberpunk 2077 на ультрах в 4K — как в кино.\" (45 лайков)\n2. DesignMaster: \"Рендеринг в 2 раза быстрее, чем на 2080 Ti.\" (32 лайка)\n\n[Подробные спецификации](#) | [Купить](#)",
     "Category": "Видеокарты",
@@ -42,15 +42,15 @@
       }
     ],
     "Pictures": [
-      "https://c.dns-shop.ru/thumb/st4/fit/300/300/65e7b497b1004cbe140920b8f0128f77/37585d7b247cfba52f5afd018647e578f28c2e27430df1e0240a5267ae0a1ec4.jpg.webp",
-      "https://c.dns-shop.ru/thumb/st4/fit/300/300/2e77c7fc6e57b5106ef71162ed0f5173/70e350cb3d93c4b3e4ee7bacf4ba075fce11c64b345526d791a74e2b6a9e818b.jpg.webp",
-      "https://c.dns-shop.ru/thumb/st1/fit/300/300/6234aadb78a18ba545bb64a4c80b9096/f2da3595da85444fe04af4927e3a806ad3be769429c394f6fcb7232d658d6f33.jpg.webp"
+      "https://avatars.mds.yandex.net/get-mpic/4860193/img_id2036649374509066504.jpeg/optimize",
+      "https://avatars.mds.yandex.net/get-mpic/3907807/img_id4345018815018687855.jpeg/optimize",
+      "https://avatars.mds.yandex.net/get-mpic/5395693/img_id7414097454966559758.png/optimize"
     ]
   },
   {
-    "Id": "a1b2c3d4-1234-5678-9101-112131415777",
+    "Id": 258692825,
     "Name": "NVIDIA GeForce RTX 3080 12Gb",
-    "Description": "# NVIDIA GeForce RTX 3080\n\n![RTX 3080](https://example.com/images/rtx3080.jpg)\n\n**Категория**: Видеокарты | **Производитель**: NVIDIA | **Цена**: $699\n\n**Описание**: Флагманская видеокарта на архитектуре Ampere с 10 ГБ GDDR6X, поддержкой Ray Tracing и DLSS 2.0.\n\n**Характеристики**:\n- GPU: NVIDIA GA102\n- Память: 10 ГБ GDDR6X\n- Тактовая частота: 1440–1710 МГц\n- TDP: 320 Вт\n\n**Теги**: `Игры` `4K` `Ray Tracing` `VR` `Дизайн`\n\n**Комментарии**:\n1. GamerPro: \"Cyberpunk 2077 на ультрах в 4K — как в кино.\" (45 лайков)\n2. DesignMaster: \"Рендеринг в 2 раза быстрее, чем на 2080 Ti.\" (32 лайка)\n\n[Подробные спецификации](#) | [Купить](#)",
+    "Description": "# NVIDIA GeForce RTX 3080\n\n![RTX 3080](https://example.com/images/rtx3080.jpg)\n\n**Категория**: Видеокарты | **Производитель**: NVIDIA | **Цена**: $799\n\n**Описание**: Флагманская видеокарта на архитектуре Ampere с 12 ГБ GDDR6X, поддержкой Ray Tracing и DLSS 2.0.\n\n**Характеристики**:\n- GPU: NVIDIA GA102\n- Память: 12 ГБ GDDR6X\n- Тактовая частота: 1440–1710 МГц\n- TDP: 320 Вт\n\n**Теги**: `Игры` `4K` `Ray Tracing` `VR` `Дизайн`\n\n**Комментарии**:\n1. GamerPro: \"Cyberpunk 2077 на ультрах в 4K — как в кино.\" (45 лайков)\n2. DesignMaster: \"Рендеринг в 2 раза быстрее, чем на 2080 Ti.\" (32 лайка)\n\n[Подробные спецификации](#) | [Купить](#)",
     "Category": "Видеокарты",
     "Cost": 47000,
     "Rating": 4.9,
@@ -90,9 +90,10 @@
       }
     ],
     "Pictures": [
-      "https://c.dns-shop.ru/thumb/st4/fit/300/300/65e7b497b1004cbe140920b8f0128f77/37585d7b247cfba52f5afd018647e578f28c2e27430df1e0240a5267ae0a1ec4.jpg.webp",
-      "https://c.dns-shop.ru/thumb/st4/fit/300/300/2e77c7fc6e57b5106ef71162ed0f5173/70e350cb3d93c4b3e4ee7bacf4ba075fce11c64b345526d791a74e2b6a9e818b.jpg.webp",
-      "https://c.dns-shop.ru/thumb/st1/fit/300/300/6234aadb78a18ba545bb64a4c80b9096/f2da3595da85444fe04af4927e3a806ad3be769429c394f6fcb7232d658d6f33.jpg.webp"
+      "https://avatars.mds.yandex.net/get-mpic/4250892/img_id1362698206322709433.jpeg/optimize",
+      "https://avatars.mds.yandex.net/get-mpic/1605421/img_id7272965776556589101.jpeg/optimize",
+      "https://avatars.mds.yandex.net/get-mpic/1704682/img_id8379037247244974852.jpeg/optimize",
+      "https://avatars.mds.yandex.net/get-mpic/5217165/img_id4039058687030542154.jpeg/optimize"
     ]
   }
 ]

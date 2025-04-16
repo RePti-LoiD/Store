@@ -87,6 +87,17 @@ public class CartViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(TotalCount));
     }
 
+    public double TotalCostOf(Product product) =>
+        product.Cost * CountOf(product);
+
+    public int CountOf(Product product)
+    {
+        if (Products.ContainsKey(product))
+            return Products[product];
+
+        return 0;
+    }
+
     public Dictionary<Product, int> GetProductsInCart() => products;
 
     public void OnPropertyChanged([CallerMemberName]string propertyName = "") =>

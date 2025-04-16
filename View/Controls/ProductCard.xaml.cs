@@ -24,7 +24,6 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
     public CartViewModel? Cart
     {
         get => cart;
@@ -36,31 +35,10 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
         }
     }
 
+
     public event PropertyChangedEventHandler? PropertyChanged;
     
     private Action<object, ProductViewModel?, UIElement>? onClick;
-
-    private Visibility ButtonVisibility
-    {
-        get => IsButtonVisible();
-    }
-
-    private Visibility AppenderVisibility
-    {
-        get => IsButtonVisible() == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-    }
-
-    private int ProductInCartCount
-    {
-        get
-        {
-            if (cart!.Products.ContainsKey(Product!.Product))
-                return cart!.Products[Product!.Product];
-
-            return 0;
-        }
-
-    }
 
     public ProductCard()
     {
@@ -81,40 +59,5 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
     private void Grid_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
         onClick?.Invoke(this, product, ProductCardImage);
-    }
-
-    private Visibility IsButtonVisible()
-    {
-        if (Cart!.Products.ContainsKey(Product!.Product))
-            return Visibility.Collapsed;
-
-        return Visibility.Visible;
-    }
-
-    private void AddButtonClick(object sender, RoutedEventArgs e)
-    {
-        Cart!.AddProduct(Product!.Product);
-        
-        UpdateBinds();
-    }
-
-    private void IncrementButtonClick(object sender, RoutedEventArgs e)
-    {
-        Cart!.IncrementProduct(Product!.Product);
-
-        UpdateBinds();
-    }
-
-    private void DecrementButtonClick(object sender, RoutedEventArgs e)
-    {
-        Cart!.DecrementProduct(Product!.Product);
-        UpdateBinds();
-    }
-
-    private void UpdateBinds()
-    {
-        OnPropertyChanged(nameof(ButtonVisibility));
-        OnPropertyChanged(nameof(AppenderVisibility));
-        OnPropertyChanged(nameof(ProductInCartCount));
     }
 }

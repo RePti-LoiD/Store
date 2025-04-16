@@ -5,7 +5,7 @@ namespace Store.Model;
 
 public class Product : ICloneable
 {
-    private Guid id = Guid.NewGuid();
+    private int id;
 
     private string name;
     private string description;
@@ -21,7 +21,7 @@ public class Product : ICloneable
     private List<Spec> specs;
     private List<string> pictures;
 
-    public Guid Id { get => id; }
+    public int Id { get => id; set => id = value; }
     public string Name { get => name; set => name = value; }
     public string Description { get => description; set => description = value; }
     public string Category { get => category; set => category = value; }
@@ -42,6 +42,7 @@ public class Product : ICloneable
     }
 
     public override bool Equals(object? obj) =>
-        obj is Product other && other.Id.Equals(Id);
-}
+        obj is Product other && other.Id == Id;
 
+    public override int GetHashCode() => Id;
+}

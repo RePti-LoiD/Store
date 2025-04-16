@@ -4,12 +4,38 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Store.View;
 
-public sealed partial class ProductPage : Page
+public sealed partial class ProductPage : Page, INotifyPropertyChanged
 {
     private ProductViewModel productViewModel;
+    private CartViewModel cart;
+
+    public CartViewModel Cart 
+    { 
+        get => cart; 
+        set
+        {
+            cart = value;
+
+            OnPropertyChanged();
+        }
+    }
+    public ProductViewModel Product 
+    { 
+        get => productViewModel; 
+        set
+        {
+            productViewModel = value;
+
+            OnPropertyChanged();
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public ProductPage()
     {
@@ -26,8 +52,9 @@ public sealed partial class ProductPage : Page
 
         if (e.Parameter is ProductViewModel productViewModel)
         {
-            this.productViewModel = productViewModel;
+            this.Product = productViewModel;
             MarkdownTextBlock.Config = new MarkdownConfig();
+            Cart = CartViewModel.Init();
         }
     }
 
@@ -41,4 +68,7 @@ public sealed partial class ProductPage : Page
         ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", ImageFlipView);
         Frame.GoBack(new DrillInNavigationTransitionInfo());
     }
+
+    private void OnPropertyChanged([CallerMemberName] string property = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 }
