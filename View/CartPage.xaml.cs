@@ -33,7 +33,7 @@ public sealed partial class CartPage : Page, INotifyPropertyChanged
         }
     }
     private double TotalSum =>
-        productDatas.Select(x => x.product.Cost * x.cart.CountOf(x.product)).Sum();
+        Math.Round(productDatas.Select(x => x.product.Cost * x.cart.CountOf(x.product)).Sum());
 
     private Visibility EmptyCartUiVisible
     {

@@ -8,7 +8,7 @@ public class UnixToDataStringConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, string language)
     {
         if (value is long unixTimeStamp)
-            return DateTimeOffset.FromUnixTimeSeconds(unixTimeStamp).ToString("dd.MM.yy HH:mm");
+            return DateTimeOffset.FromUnixTimeMilliseconds(unixTimeStamp).ToString("dd.MM.yy HH:mm");
 
         return "null";
     }

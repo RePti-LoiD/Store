@@ -35,8 +35,10 @@
                             QuerySubmitted="AutoSuggestBox_QuerrySubmitted"
                             SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
 
-            <ScrollViewer>
-                <Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          VerticalScrollMode="Auto">
+                
+                <Grid VerticalAlignment="Stretch">
                     <GridView x:Name="Grid" 
                               VerticalAlignment="Top" 
                               HorizontalAlignment="Center" 
@@ -66,7 +68,10 @@
                                       Height="350"/>
                         <labs:Shimmer Width="250" 
                                       Height="350"/>
+                        <labs:Shimmer Width="250" 
+                                      Height="350"/>
                     </GridView>
+                    
                 </Grid>
                 
             </ScrollViewer>

@@ -85,7 +85,7 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         var connectedAnimation = ConnectedAnimationService
                                     .GetForCurrentView()
-                                    .PrepareToAnimate("DirectConnectedAnimation", uiElement);
+                                    .PrepareToAnimate("DirectConnectedAnimation", uiElement ?? Grid);
         
         connectedAnimation.Configuration = new DirectConnectedAnimationConfiguration();
         Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
