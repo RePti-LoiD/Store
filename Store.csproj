@@ -19,11 +19,12 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Auto</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>C:\Users\delhi\source\repos\Store\bin\Debug\net9.0-windows10.0.26100.0\win-x64\publish\</AppxPackageDir>
     <PackageCertificatePassword>135790864</PackageCertificatePassword>
     <PackageCertificateThumbprint>4A8DFE6E92C53A948B22B53D8912CB0B76A4459C</PackageCertificateThumbprint>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\products.json" />
@@ -39,6 +40,7 @@
     <PackageReference Include="CommunityToolkit.Labs.Uwp.MarqueeText" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Shimmer" Version="0.1.250319-build.2093" />
     <PackageReference Include="CommunityToolkit.Labs.Uwp.TokenView" Version="0.1.250319-build.2093" />
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.MetadataControl" Version="8.2.250402" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

@@ -23,27 +23,20 @@ public sealed partial class ProductItemCart : UserControl
     }
 
     public ProductItemCart 
-    ( 
-        CartViewModel cart, 
+    (  
         ProductViewModel product, 
         Action<object, ProductViewModel>? click = null,
         Action<object, ProductViewModel>? additionalButtonClick = null,
         Action<object, ProductViewModel>? remove = null
     ) : this()
     {
-        Cart = cart;
+        Cart = CartViewModel.Init();
         Product = product;
 
         this.click = click;
         this.additionalButtonClick = additionalButtonClick;
         this.remove = remove;
     }
-
-    private string CountOf() => 
-        Cart!.CountOf(Product!.Product).ToString();
-
-    private string TotalCostOf() =>
-        Cart!.TotalCostOf(Product!.Product).ToString();
 
     private void LaunchProductPage(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e) =>
         click?.Invoke(sender, Product!);

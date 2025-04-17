@@ -17,9 +17,9 @@
     
     
     <Grid PointerReleased="Grid_PointerReleased" 
-          CornerRadius="{StaticResource OverlayCornerRadius}"
+          CornerRadius="15"
           Width="250" 
-          Height="350">
+          Height="370">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
@@ -52,18 +52,36 @@
               HorizontalAlignment="Stretch"
               Background="{StaticResource CardBackgroundFillColorDefaultBrush}">
 
-            <labs:MarqueeText Text="{x:Bind Product.Name, Mode=OneWay}"
-                              Direction="Left"
-                              Behavior="Looping"
+            <StackPanel Padding="10">
+                <labs:MarqueeText Text="{x:Bind Product.Name, Mode=OneWay}"
+                                  Direction="Left"
+                                  Behavior="Looping"
+                                  FontSize="16"
+                                  FontWeight="SemiBold"/>
+                
+                <StackPanel Orientation="Horizontal"
+                            Spacing="5"
+                            Margin="0 5 0 0">
+
+                    <FontIcon Glyph="&#xE734;"
                               FontSize="16"
-                              FontWeight="SemiBold"
-                              Margin="10"/>
+                              Foreground="{StaticResource SystemAccentColor}"/>
+
+                    <TextBlock Text="{x:Bind Product.Rating}"/>
+
+                    <FontIcon Glyph="&#xE90A;" 
+                              FontSize="15"
+                              Margin="10 0 0 0"/>
+
+                    <TextBlock Text="{x:Bind Product.Commentaries.Count}"/>
+                </StackPanel>
+            </StackPanel>
 
             <controls:AddToCartButton Cart="{x:Bind Cart}" 
                                       Product="{x:Bind Product}"
                                       VerticalAlignment="Bottom"
-                                      HorizontalAlignment="Left"
-                                      Margin="16"/>
+                                      HorizontalAlignment="Stretch"
+                                      Margin="5"/>
         </Grid>
     </Grid>
 </UserControl>

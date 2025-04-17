@@ -42,7 +42,8 @@
                               HorizontalAlignment="Center" 
                               SelectionMode="None"/>
 
-                    <GridView VerticalAlignment="Top"
+                    <GridView x:Name="ShimmerGrid"
+                              VerticalAlignment="Top"
                               HorizontalAlignment="Center" 
                               SelectionMode="None"
                               Visibility="{x:Bind ReverseVisibility(IsLoad), Mode=OneWay}">

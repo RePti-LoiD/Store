@@ -46,13 +46,14 @@ public sealed partial class ProductPage : Page, INotifyPropertyChanged
     {
         base.OnNavigatedTo(e);
 
-        var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("DirectConnectedAnimation");
-        if (anim != null)
-            anim.TryStart(ImageFlipView);
+        ConnectedAnimationService
+            .GetForCurrentView()
+            .GetAnimation("DirectConnectedAnimation")?
+            .TryStart(ImageFlipView);
 
         if (e.Parameter is ProductViewModel productViewModel)
         {
-            this.Product = productViewModel;
+            Product = productViewModel;
             MarkdownTextBlock.Config = new MarkdownConfig();
             Cart = CartViewModel.Init();
         }
@@ -65,8 +66,11 @@ public sealed partial class ProductPage : Page, INotifyPropertyChanged
 
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
-        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("DirectConnectedAnimation", ImageFlipView);
-        Frame.GoBack(new DrillInNavigationTransitionInfo());
+        ConnectedAnimationService
+            .GetForCurrentView()
+            .PrepareToAnimate("DirectConnectedAnimation", ImageFlipView);
+
+        Frame.GoBack(new SlideNavigationTransitionInfo());
     }
 
     private void OnPropertyChanged([CallerMemberName] string property = "") =>

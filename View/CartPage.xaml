@@ -63,6 +63,24 @@
                       SelectionMode="None"
                       ItemsSource="{x:Bind products, Mode=OneWay}"/>
 
+            <Grid x:Name="EmptyCartUi"
+                  Grid.Row="1"
+                  Visibility="{x:Bind EmptyCartUiVisible}">
+                <StackPanel Spacing="5"
+                            Margin="0 50 0 0">
+                    <FontIcon Glyph="&#xEA92;"
+                              FontSize="150"/>
+                    
+                    <TextBlock Text="Корзина пуста..." 
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    <Button Content="Вернуться к покупкам"
+                            HorizontalAlignment="Stretch"
+                            Margin="50 10 50 0"
+                            Click="BackButton_Click"/>
+                </StackPanel>
+            </Grid>
+
             <StackPanel Spacing="10"
                         Grid.Row="1"
                         Grid.Column="1">
@@ -132,6 +150,7 @@
 
                 <Button Content="Оформить заказ"
                         Click="CreateOrder"
+                        IsEnabled="{x:Bind MakeOrderButtonEnabled}"
                         Style="{StaticResource AccentButtonStyle}"
                         HorizontalAlignment="Stretch"
                         Margin="20 0 20 0"/>

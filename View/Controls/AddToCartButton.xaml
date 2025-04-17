@@ -17,48 +17,51 @@
         <helpers:ObjectToStringConverter x:Key="ToString"/>
     </UserControl.Resources>
     
-    <Grid>
+    <Grid HorizontalAlignment="Stretch"
+          CornerRadius="10">
         <Button Style="{StaticResource AccentButtonStyle}"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
                 Click="AddButtonClick"
+                HorizontalAlignment="Stretch"
                 Visibility="{x:Bind ButtonVisibility, Mode=OneWay}">        
 
-            <StackPanel Orientation="Horizontal" 
+            <StackPanel Orientation="Horizontal"
                         Spacing="4">
 
                 <FontIcon Glyph="&#xE7BF;"/>
+                
                 <TextBlock Text="{x:Bind Product.Cost, Converter={StaticResource CostConverter}}" 
                    Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                
             </StackPanel>
 
         </Button>
 
-        <Border Background="{StaticResource ControlStrokeColorDefaultBrush}"
-                CornerRadius="10"
-                Padding="5"
-                Visibility="{x:Bind AppenderVisibility, Mode=OneWay}">
-            <StackPanel Spacing="10"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal" >
+        <Grid Background="{StaticResource ControlStrokeColorDefaultBrush}"
+              CornerRadius="{StaticResource ControlCornerRadius}"
+              Padding="5"
+              Visibility="{x:Bind AppenderVisibility, Mode=OneWay}">
 
-                <Button Style="{StaticResource AccentButtonStyle}"
-                        Click="DecrementButtonClick">
-                    <FontIcon Glyph="&#xE738;" 
-                  FontSize="12"/>
-                </Button>
+            <Button Style="{StaticResource AccentButtonStyle}"
+                    Click="DecrementButtonClick"
+                    HorizontalAlignment="Left">
+                
+                <FontIcon Glyph="&#xE738;" 
+                          FontSize="15"/>
+            </Button>
 
-                <TextBlock VerticalAlignment="Center" 
-                           Text="{x:Bind ProductInCartCount, Mode=OneWay}"
-                           Style="{StaticResource BodyStrongTextBlockStyle}"/>
+            <TextBlock VerticalAlignment="Center" 
+                       Text="{x:Bind ProductInCartCount, Mode=OneWay}"
+                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                       HorizontalAlignment="Center"/>
 
-                <Button Style="{StaticResource AccentButtonStyle}"
-                        Click="IncrementButtonClick">
-                    <FontIcon Glyph="&#xE710;" 
-                  FontSize="12"/>
-                </Button>
-            </StackPanel>
-        </Border>
+            <Button Style="{StaticResource AccentButtonStyle}"
+                    Click="IncrementButtonClick"
+                    HorizontalAlignment="Right">
+                
+                <FontIcon Glyph="&#xE710;" 
+                          FontSize="15"/>
+            </Button>
+        </Grid>
     </Grid>
+    
 </UserControl>

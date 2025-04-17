@@ -9,6 +9,7 @@
     xmlns:helpers="using:Store.Helpers"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:model="using:Store.Model"
+    xmlns:converters="using:Store.Helpers.Converters"    
     xmlns:localControls="using:Store.View.Controls"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
@@ -20,6 +21,7 @@
 
     <Page.Resources>
         <helpers:CostConverter x:Key="CostConverter"/>
+        <converters:UnixToDataStringConverter x:Key="UnixTimeStampConverter"/>
     </Page.Resources>
     
     <Grid>
@@ -144,7 +146,7 @@
                             <controls:DataTable Margin="12,0,0,0">
                                 <controls:DataColumn 
                                     Content="Key"
-                                    DesiredWidth="80"/>
+                                    DesiredWidth="150"/>
 
                                 <controls:DataColumn 
                                     Content="Value"
@@ -174,6 +176,48 @@
 
                     </ListView>
 
+                    <TextBlock Text="Отзывы"
+                               Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    
+                    <ListView ItemsSource="{x:Bind Product.Commentaries}"
+                              SelectionMode="None"
+                              Margin="-20 0 0 0"
+                              Width="450"
+                              HorizontalAlignment="Left">
+                        
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Commentary">
+                                <StackPanel CornerRadius="{StaticResource ControlCornerRadius}"
+                                            Background="{StaticResource CardBackgroundFillColorSecondaryBrush}"
+                                            Margin="5"
+                                            Orientation="Horizontal">
+
+                                    <PersonPicture Height="24"
+                                                   VerticalAlignment="Top"
+                                                   Margin="15 15 10 0"/>
+
+                                    <StackPanel Spacing="10"
+                                                Padding="10">
+                                        <Grid>
+                                            <TextBlock Text="{x:Bind UserName}"
+                                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                                            
+                                            <TextBlock Text="{x:Bind Time, Converter={StaticResource UnixTimeStampConverter}}"
+                                                       VerticalAlignment="Center" 
+                                                       HorizontalAlignment="Right"
+                                                       FontWeight="Light"/>
+                                        </Grid>
+                                        
+                                        <TextBlock Text="{x:Bind Content}"
+                                                   TextWrapping="Wrap"
+                                                   Width="330"/>
+                                    </StackPanel>
+                                    
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        
+                    </ListView>
                 </StackPanel>
 
                 <Grid Background="{StaticResource LayerFillColorAltBrush}" 
@@ -194,6 +238,7 @@
 
                         <localControls:AddToCartButton Cart="{x:Bind Cart}"
                                                        Product="{x:Bind Product}"
+                                                       Width="150"
                                                        VerticalAlignment="Bottom"
                                                        HorizontalAlignment="Right"/>
                     </Grid>
@@ -201,6 +246,8 @@
                     
 
                 </Grid>
+                
+                
             </Grid>
         </ScrollViewer>
     </Grid>

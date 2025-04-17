@@ -45,10 +45,10 @@ public sealed partial class ProductCard : UserControl, INotifyPropertyChanged
         InitializeComponent();
     }
 
-    public ProductCard(ProductViewModel productViewModel, CartViewModel cart, Action<object, ProductViewModel?, UIElement> onClick) : this()
+    public ProductCard(ProductViewModel productViewModel, Action<object, ProductViewModel?, UIElement> onClick) : this()
     {
+        cart = CartViewModel.Init();
         Product = productViewModel;
-        Cart = cart;
 
         this.onClick = onClick;
     }

@@ -9,7 +9,7 @@
   <Identity
     Name="61d62fd0-f2cf-40c6-8770-d15e215acc5a"
     Publisher="CN=delhi"
-    Version="1.0.6.0" />
+    Version="1.0.9.0" />
 
   <mp:PhoneIdentity PhoneProductId="61d62fd0-f2cf-40c6-8770-d15e215acc5a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

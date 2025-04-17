@@ -30,50 +30,31 @@
         </Image>
 
         <Grid Margin="100, 0, 0, 0"
-              
               Background="{StaticResource SystemControlAcrylicElementBrush}">
-            
+
             <StackPanel Padding="10"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left">
 
-            <labs:MarqueeText Text="{x:Bind product.Name}"
-                              Style="{StaticResource SubtitleTextBlockStyle}"
-                              Direction="Left"
-                              Behavior="Looping"
-                              FontSize="16"
-                              FontWeight="SemiBold"/>
+                <labs:MarqueeText Text="{x:Bind product.Name}"
+                                  Direction="Left"
+                                  Behavior="Looping"
+                                  FontSize="16"
+                                  FontWeight="SemiBold"/>
 
-            <TextBlock Text="{x:Bind product.Id}" 
-                       Style="{StaticResource CaptionTextBlockStyle}"
-                       Foreground="{StaticResource TextFillColorTertiaryBrush}"/>
+                <TextBlock Text="{x:Bind product.Id}"/>
             </StackPanel>
 
             <controls:AddToCartButton x:Name="AddToCartButton"
                                       ButtonClicked="AddToCartButton_ButtonClicked"
                                       VerticalAlignment="Bottom"
                                       HorizontalAlignment="Right"
-                                      Margin="15"
+                                      Margin="5"
+                                      Width="150"
                                       Grid.Column="1" 
                                       Cart="{x:Bind cart}" 
                                       Product="{x:Bind product}"/>
-
-            <Grid VerticalAlignment="Bottom"
-                  HorizontalAlignment="Right"
-                  Margin="15"
-                  Grid.Column="1"
-                  Visibility="Collapsed">
-                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">
-                    <Run Text="{x:Bind product.Cost, Converter={StaticResource CostConverter}}"/>
-                    x
-                    <Run Text="{x:Bind CountOf()}"/>
-                    =
-                    <Run Text="{x:Bind TotalCostOf()}"
-                         FontWeight="Bold"/>
-                    ₽
-                </TextBlock>
-            </Grid>
         </Grid>
-
+        
     </Grid>
 </UserControl>

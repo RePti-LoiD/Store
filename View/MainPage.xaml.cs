@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -46,9 +47,8 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
 
     private void InitMainPage()
     {
-        cart = CartViewModel.Init();
-
         productDataProvider = ProductDataProvider.Init();
+        cart = CartViewModel.Init();
 
         _ = Task.Run(async () =>
         {
@@ -59,7 +59,7 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
             _ = Dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
             {
                 foreach (var product in products)
-                    Grid.Items.Add(new ProductCard(product, cart, LaunchProductPage));
+                    Grid.Items.Add(new ProductCard(product, LaunchProductPage));
 
                 IsLoad = true;
             });
@@ -70,19 +70,25 @@ public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         base.OnNavigatedTo(e);
 
-        var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("DirectConnectedAnimation");
-        if (anim != null && lastSelected != null)
-            anim.TryStart(lastSelected);
+        ConnectedAnimationService
+            .GetForCurrentView()
+            .GetAnimation("DirectConnectedAnimation")?
+            .TryStart(ShimmerGrid);
     }
 
     private void LaunchCartPage(object sender, RoutedEventArgs e)
     {
-        Frame.Navigate(typeof(CartPage));
+        Frame.Navigate(typeof(CartPage), null, new SlideNavigationTransitionInfo());
     }
 
-    public void LaunchProductPage(object sender, ProductViewModel? productViewModel, UIElement uIElement)
+    public void LaunchProductPage(object sender, ProductViewModel? productViewModel, UIElement uiElement)
     {
-        Frame.Navigate(typeof(ProductPage), productViewModel);
+        var connectedAnimation = ConnectedAnimationService
+                                    .GetForCurrentView()
+                                    .PrepareToAnimate("DirectConnectedAnimation", uiElement);
+        
+        connectedAnimation.Configuration = new DirectConnectedAnimationConfiguration();
+        Frame.Navigate(typeof(ProductPage), productViewModel, new DrillInNavigationTransitionInfo());
     }
 
     private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
