@@ -156,7 +156,7 @@
                                 
                                 <controls:DataRow HorizontalAlignment="Left">
                                     <TextBlock Text="{x:Bind SpecName}" 
-                                               Foreground="{StaticResource TextFillColorSecondaryBrush }"/>
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"/>
 
                                     <labsMarquee:MarqueeText Text="{x:Bind SpecValue}" 
                                                              Direction="Left"

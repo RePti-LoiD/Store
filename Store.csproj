@@ -23,7 +23,7 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>C:\Users\delhi\source\repos\Store\bin\Debug\net9.0-windows10.0.26100.0\win-x64\publish\</AppxPackageDir>
     <PackageCertificatePassword>135790864</PackageCertificatePassword>
-    <PackageCertificateThumbprint>4A8DFE6E92C53A948B22B53D8912CB0B76A4459C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>A05E00EF6B3C64964B379E0E6FE7589F0D522B08</PackageCertificateThumbprint>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
   </PropertyGroup>
   <ItemGroup>
