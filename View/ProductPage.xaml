@@ -41,7 +41,8 @@
             
             <FlipView.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
-                    <Image Stretch="UniformToFill">
+                    <Image Stretch="UniformToFill"
+                           HorizontalAlignment="Center">
                         <Image.Source>
                             <BitmapImage UriSource="{x:Bind}"/>
                         </Image.Source>
