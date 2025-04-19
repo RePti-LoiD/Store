@@ -74,7 +74,8 @@ xmlns:md="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 ```csharp
 // Чтение JSON-файла
 
-StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(GlobalConst.DEFAULT_PRODUCT_JSON_PATH);
+StorageFile file = await StorageFile
+                            .GetFileFromApplicationUriAsync(GlobalConst.DEFAULT_PRODUCT_JSON_PATH);
 string json = await FileIO.ReadTextAsync(file);
 ```
 
@@ -86,8 +87,24 @@ string json = await FileIO.ReadTextAsync(file);
 
 3. Восстановить пакеты:\
     `Visual Studio PowerShell`: dotnet restore
-  
+
 4. Запустить (F5)
+
+## Установка релиза
+1. Скачиваем `Store.rar`
+
+2. Разархивируем в любой удобный путь
+
+3. Установка
+   - *Однокнопочная*
+
+     ПКМ по `Installer.ps1` -> выполнить в PowerShell
+
+   - *Ручная* 
+     
+     1. Открыть папку `.app`
+     2. Установить сертификат разработчика `Store_1.0.12.0_x64.cer`
+     3. Установить приложение `Store_1.0.12.0_x64.msix`
 
 ## 📜 Лицензия
 MIT License\
