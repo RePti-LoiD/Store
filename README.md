@@ -75,8 +75,8 @@ xmlns:md="using:CommunityToolkit.Labs.WinUI.MarkdownTextBlock"
 ```csharp
 // Чтение JSON-файла
 
-StorageFile file = await StorageFile
-                            .GetFileFromApplicationUriAsync(GlobalConst.DEFAULT_PRODUCT_JSON_PATH);
+StorageFile file =
+	await StorageFile.GetFileFromApplicationUriAsync(GlobalConst.DEFAULT_PRODUCT_JSON_PATH);
 string json = await FileIO.ReadTextAsync(file);
 ```
 
